@@ -20,7 +20,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 2rem 1.5rem;
             color: #f0e9ff;
         }
@@ -39,7 +39,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         .header h1 {
             font-size: 3.8rem;
@@ -51,7 +51,7 @@
             background-clip: text;
             color: transparent;
             text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             font-family: 'Times New Roman', serif;
         }
         .header h1 span {
@@ -60,14 +60,14 @@
         }
 
         .subhead {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #b8a9d9;
             letter-spacing: 3px;
             word-spacing: 6px;
             border-top: 1px solid rgba(212, 175, 55, 0.25);
             border-bottom: 1px solid rgba(212, 175, 55, 0.25);
             display: inline-block;
-            padding: 0.7rem 2.5rem;
+            padding: 0.5rem 2.5rem;
             backdrop-filter: blur(4px);
             background: rgba(0, 0, 0, 0.2);
             border-radius: 60px;
@@ -78,55 +78,12 @@
             margin: 0 8px;
         }
 
-        /* ---- Éloges de l'auteur ---- */
-        .author-praise {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 2rem;
-            padding: 1.8rem 2rem;
-            margin: 2rem 0 2.5rem;
-            text-align: center;
-            backdrop-filter: blur(4px);
-        }
-        .author-praise h2 {
-            font-family: 'Times New Roman', serif;
-            font-size: 1.8rem;
-            color: #f5e9b0;
-            letter-spacing: 2px;
-            margin-bottom: 0.8rem;
-        }
-        .author-praise h2 .icon {
-            color: #d4af37;
-            margin: 0 8px;
-        }
-        .author-praise p {
-            color: #d4c9f0;
-            font-size: 1.05rem;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .author-praise .highlight {
-            color: #f7e05e;
-            font-weight: 500;
-        }
-        .author-praise .seal {
-            display: inline-block;
-            margin-top: 0.8rem;
-            padding: 0.3rem 2rem;
-            border: 1px solid #d4af37;
-            border-radius: 60px;
-            color: #d4af37;
-            font-size: 0.85rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
+        /* ---- GRILLE TOMES ---- */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2.2rem;
-            margin: 3rem 0 2.5rem;
+            margin: 2rem 0 2.5rem;
         }
 
         .tome {
@@ -220,9 +177,136 @@
             box-shadow: 0 3px 0 #6b4f0a;
         }
 
+        /* ---- QUI EST CHEIKH ABDOUL WALYY (bouton cliquable visible) ---- */
+        .about-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            border: 2px solid rgba(212, 175, 55, 0.25);
+            border-radius: 2rem;
+            padding: 0;
+            margin: 2.5rem 0 2.5rem;
+            backdrop-filter: blur(4px);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .about-section:hover {
+            border-color: #d4af37;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .about-toggle {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 1.2rem 2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            color: #f5e9b0;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            transition: background 0.3s ease;
+            text-align: left;
+        }
+        .about-toggle:hover {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .about-toggle .left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .about-toggle .left .icon {
+            color: #d4af37;
+            font-size: 1.8rem;
+        }
+        .about-toggle .left .label {
+            color: #f5e9b0;
+        }
+        .about-toggle .left .badge-click {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 60px;
+            padding: 0.1rem 1rem;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d4af37;
+            margin-left: 4px;
+        }
+        .about-toggle .arrow {
+            color: #d4af37;
+            font-size: 1.4rem;
+            transition: transform 0.4s ease;
+            flex-shrink: 0;
+        }
+        .about-toggle .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .about-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.5s ease;
+            opacity: 0;
+            padding: 0 2rem;
+        }
+        .about-content.open {
+            max-height: 800px;
+            opacity: 1;
+            padding: 0 2rem 2rem 2rem;
+        }
+        .about-content h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.6rem;
+            color: #f5e9b0;
+            letter-spacing: 2px;
+            margin-bottom: 0.6rem;
+        }
+        .about-content h2 .icon {
+            color: #d4af37;
+            margin: 0 8px;
+        }
+        .about-content p {
+            color: #d4c9f0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-content .highlight {
+            color: #f7e05e;
+            font-weight: 500;
+        }
+        .about-content .seal {
+            display: inline-block;
+            margin-top: 0.8rem;
+            padding: 0.3rem 2rem;
+            border: 1px solid #d4af37;
+            border-radius: 60px;
+            color: #d4af37;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        .about-content .stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem 3rem;
+            margin: 0.8rem 0 0.5rem;
+            color: #c9b37a;
+            font-size: 0.95rem;
+        }
+        .about-content .stats span {
+            color: #d4af37;
+        }
+
         /* ---- Témoignages ---- */
         .testimonials {
-            margin: 3.5rem 0 2.5rem;
+            margin: 2.5rem 0 2.5rem;
             padding: 2rem 1.8rem;
             background: rgba(10, 8, 20, 0.5);
             backdrop-filter: blur(4px);
@@ -352,7 +436,7 @@
 
         /* ---- Assistance ---- */
         .assistance {
-            margin: 3rem 0 1.5rem;
+            margin: 2.5rem 0 1.5rem;
             padding: 1.8rem 1.5rem;
             background: rgba(10, 8, 20, 0.6);
             backdrop-filter: blur(4px);
@@ -464,11 +548,26 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 0.8rem;
             }
-            .author-praise h2 {
+            .about-toggle {
+                padding: 1rem 1.2rem;
+                font-size: 1.2rem;
+            }
+            .about-toggle .left .badge-click {
+                font-size: 0.55rem;
+                padding: 0.05rem 0.7rem;
+            }
+            .about-content.open {
+                padding: 0 1.2rem 1.2rem 1.2rem;
+            }
+            .about-content h2 {
                 font-size: 1.4rem;
             }
-            .author-praise p {
+            .about-content p {
                 font-size: 0.95rem;
+            }
+            .about-content .stats {
+                gap: 0.8rem 1.5rem;
+                font-size: 0.85rem;
             }
         }
         @media (max-width: 480px) {
@@ -481,6 +580,16 @@
             .testimonial-grid {
                 grid-template-columns: 1fr;
             }
+            .about-toggle {
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+            }
+            .about-toggle .left .icon {
+                font-size: 1.2rem;
+            }
+            .about-toggle .arrow {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -492,27 +601,9 @@
             <div class="subhead">
                 <span class="icon">☾</span> Cheikh Abdoul Walyy <span class="icon">★</span> Secrets mystiques
             </div>
-            <p style="margin-top: 0.8rem; color: #b3a3d6; font-style: italic; letter-spacing: 1px;">
-                <span style="color:#d4af37;">✦</span> Manuscrits sacrés · transmission d'énergie <span style="color:#d4af37;">✦</span>
+            <p style="margin-top: 0.5rem; color: #b3a3d6; font-style: italic; letter-spacing: 1px; font-size: 0.95rem;">
+                <span style="color:#d4af37;">✦</span> Manuscrits sacrés · Rituels · Transmission d'énergie <span style="color:#d4af37;">✦</span>
             </p>
-        </div>
-
-        <!-- ÉLOGES DE L'AUTEUR -->
-        <div class="author-praise">
-            <h2><span class="icon">✦</span> Cheikh Abdoul Walyy <span class="icon">✦</span></h2>
-            <p>
-                <span class="highlight">Maître spirituel</span> et gardien des traditions mystiques, le Cheikh Abdoul Walyy
-                transmet un <span class="highlight">savoir ancestral</span> à travers ses écrits sacrés.
-                Ses enseignements, issus d'une <span class="highlight">chaîne initiatique</span> ininterrompue,
-                dévoilent les <span class="highlight">secrets des rituels</span> et des pratiques spirituelles
-                qui <span class="highlight">éveillent la conscience</span> et élèvent l'âme.
-            </p>
-            <p style="margin-top: 0.6rem; color: #c9b37a;">
-                <span style="color:#d4af37;">✦</span> <span class="highlight">30 ans</span> de pratique mystique
-                <span style="color:#d4af37;">✦</span> Transmission des <span class="highlight">rituels secrets</span>
-                <span style="color:#d4af37;">✦</span> Des <span class="highlight">milliers</span> de disciples à travers le monde
-            </p>
-            <div class="seal">✧ Gardien du savoir ancestral ✧</div>
         </div>
 
         <!-- GRILLE TOMES -->
@@ -548,7 +639,35 @@
             </div>
         </div>
 
-        <!-- TÉMOIGNAGES (6 sur la page d'accueil) -->
+        <!-- QUI EST CHEIKH ABDOUL WALYY (bouton cliquable bien visible) -->
+        <div class="about-section">
+            <button class="about-toggle" id="toggleAbout">
+                <span class="left">
+                    <span class="icon">✦</span>
+                    <span class="label">Qui est Cheikh Abdoul Walyy ?</span>
+                    <span class="badge-click">▼ cliquer</span>
+                </span>
+                <span class="arrow" id="arrowIcon">▼</span>
+            </button>
+            <div class="about-content" id="aboutContent">
+                <h2><span class="icon">✦</span> Cheikh Abdoul Walyy <span class="icon">✦</span></h2>
+                <p>
+                    <span class="highlight">Maître spirituel</span> et gardien des traditions mystiques, le Cheikh Abdoul Walyy
+                    transmet un <span class="highlight">savoir ancestral</span> à travers ses écrits sacrés.
+                    Issu d'une <span class="highlight">chaîne initiatique</span> ininterrompue, il dévoile les
+                    <span class="highlight">secrets des rituels</span> et des pratiques spirituelles
+                    qui <span class="highlight">éveillent la conscience</span> et élèvent l'âme.
+                </p>
+                <div class="stats">
+                    <span>📖 <span>12+</span> ouvrages spirituels</span>
+                    <span>🌍 <span>50+</span> pays touchés</span>
+                    <span>🔥 <span>100+</span> rituels transmis</span>
+                </div>
+                <div class="seal">✧ Gardien du savoir ancestral ✧</div>
+            </div>
+        </div>
+
+        <!-- TÉMOIGNAGES -->
         <div class="testimonials">
             <div class="testimonials-header">
                 <h2><span class="icon">❝</span> Témoignages <span class="icon">❞</span></h2>
@@ -604,7 +723,7 @@
                     <span class="icon">✦</span> Rejoignez notre communauté de chercheurs spirituels <span class="icon">✦</span>
                 </div>
                 <a href="temoignages.html" class="btn-more">
-                    <span>📖</span> Voir tous les témoignages (35+)
+                    <span>📖</span> Voir tous les témoignages (60+)
                 </a>
             </div>
         </div>
@@ -633,5 +752,17 @@
             <span class="icon gold-dot">●</span> Latrou Shop · Cheikh Abdoul Walyy <span class="icon gold-dot">●</span>
         </div>
     </div>
+
+    <script>
+        // Toggle pour la section "Qui est Cheikh Abdoul Walyy"
+        const toggleBtn = document.getElementById('toggleAbout');
+        const content = document.getElementById('aboutContent');
+        const arrow = document.getElementById('arrowIcon');
+
+        toggleBtn.addEventListener('click', function() {
+            content.classList.toggle('open');
+            arrow.classList.toggle('open');
+        });
+    </script>
 </body>
 </html>
