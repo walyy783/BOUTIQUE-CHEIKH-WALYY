@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="bingbot" content="noindex, nofollow">
+    <title>Latrou Shop · Tous les témoignages</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #0d0b1a 0%, #1a1630 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #f0e9ff;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border-radius: 4rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .nav-bar .brand {
+            font-size: 1.8rem;
+            font-family: 'Times New Roman', serif;
+            color: #f5e9b0;
+            letter-spacing: 2px;
+        }
+        .nav-bar .brand .icon {
+            color: #d4af37;
+        }
+        .nav-bar .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            border: 2px solid #d4af37;
+            border-radius: 60px;
+            padding: 0.6rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #f7e05e;
+            text-decoration: none;
+            transition: 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .nav-bar .btn-back:hover {
+            background: #d4af37;
+            color: #0d0b1a;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            transform: scale(1.03);
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            font-family: 'Times New Roman', serif;
+            color: #f5e9b0;
+        }
+        .page-header h1 .icon {
+            color: #d4af37;
+            margin: 0 10px;
+        }
+        .page-header .sub {
+            color: #b8a9d9;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+        }
+
+        .stat-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.4rem 2rem;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 60px;
+            color: #f7e05e;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: rgba(20, 16, 40, 0.6);
+            border-radius: 1.8rem;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            transition: 0.25s ease;
+            text-align: left;
+        }
+        .testimonial-card:hover {
+            border-color: #d4af37;
+            background: rgba(30, 24, 55, 0.7);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        .testimonial-card .stars {
+            color: #d4af37;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+        .testimonial-card .stars .empty {
+            color: #4a3f5e;
+        }
+        .testimonial-card .quote {
+            font-style: italic;
+            color: #e2d9f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+        .testimonial-card .author {
+            font-weight: 400;
+            color: #b8a9d9;
+            font-size: 0.9rem;
+            border-top: 1px dashed #3a2e5a;
+            padding-top: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .testimonial-card .author .icon {
+            color: #d4af37;
+        }
+        .testimonial-card .tome-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(212, 175, 55, 0.15);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            color: #c9b37a;
+            border: 1px solid #b8860b33;
+            margin-top: 0.3rem;
+        }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            color: #6b5d8a;
+            letter-spacing: 2px;
+            border-top: 1px solid #2e2545;
+            padding-top: 2rem;
+        }
+        .footer-credit .icon {
+            color: #b8860b;
+            margin: 0 6px;
+        }
+
+        @media (max-width: 680px) {
+            .nav-bar {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem 1.2rem;
+                border-radius: 2.5rem;
+            }
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <div class="nav-bar">
+            <div class="brand">
+                <span class="icon">✦</span> Latrou Shop
+            </div>
+            <a href="index.html" class="btn-back">
+                <span>🏪</span> Retour à la boutique
+            </a>
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <h1>
+                <span class="icon">❝</span>
+                Témoignages de lecteurs
+                <span class="icon">❞</span>
+            </h1>
+            <div class="sub">Ce que les disciples disent des enseignements mystiques du Cheikh Abdoul Walyy</div>
+            <div class="stat-badge">✦ 60+ témoignages authentiques ✦</div>
+        </div>
+
+        <!-- Tous les témoignages -->
+        <div class="testimonial-grid">
+
+            <!-- ===== TOME I (12 témoignages) ===== -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le rituel du Tome I m'a ouvert une porte vers l'invisible. Une expérience que je n'oublierai jamais.</div>
+                <div class="author"><span class="icon">👤</span> Mariam S. · <span style="color:#b8860b;">Paris</span></div>
+                <div class="tome-tag">📖 Tome I · Rituel d'éveil</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome I est une initiation parfaite. Les prières et invocations m'ont apporté une sérénité nouvelle.</div>
+                <div class="author"><span class="icon">👤</span> Amina T. · <span style="color:#b8860b;">Casablanca</span></div>
+                <div class="tome-tag">📖 Tome I · Invocations</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai ressenti une énergie puissante dès la première lecture du Tome I. Les secrets sont réels.</div>
+                <div class="author"><span class="icon">👤</span> Karim H. · <span style="color:#b8860b;">Alger</span></div>
+                <div class="tome-tag">📖 Tome I · Énergie</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome I m'a guidé vers une compréhension plus profonde des rituels nocturnes.</div>
+                <div class="author"><span class="icon">👤</span> Hélène M. · <span style="color:#b8860b;">Toulouse</span></div>
+                <div class="tome-tag">📖 Tome I · Rituels nocturnes</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une porte d'entrée vers la spiritualité authentique. Les enseignements sont clairs et puissants.</div>
+                <div class="author"><span class="icon">👤</span> Chantal B. · <span style="color:#b8860b;">Montréal</span></div>
+                <div class="tome-tag">📖 Tome I · Initiation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Très bon début, j'ai hâte de lire la suite. Le rituel de purification m'a beaucoup aidé.</div>
+                <div class="author"><span class="icon">👤</span> Jean-Pierre R. · <span style="color:#b8860b;">Montpellier</span></div>
+                <div class="tome-tag">📖 Tome I · Purification</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome I est une révélation. Les prières m'apportent une paix profonde chaque jour.</div>
+                <div class="author"><span class="icon">👤</span> Nafissatou D. · <span style="color:#b8860b;">Togo</span></div>
+                <div class="tome-tag">📖 Tome I · Paix intérieure</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai offert le Tome I à ma sœur, elle a vécu une transformation profonde en une semaine.</div>
+                <div class="author"><span class="icon">👤</span> Rokia T. · <span style="color:#b8860b;">Bamako</span></div>
+                <div class="tome-tag">📖 Tome I · Transformation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les rituels du Tome I m'ont permis de me connecter à des énergies que j'ignorais.</div>
+                <div class="author"><span class="icon">👤</span> Laurent G. · <span style="color:#b8860b;">Bordeaux</span></div>
+                <div class="tome-tag">📖 Tome I · Connexion</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une initiation puissante. Le Tome I m'a ouvert les yeux sur des réalités spirituelles.</div>
+                <div class="author"><span class="icon">👤</span> Fatou K. · <span style="color:#b8860b;">Ziguinchor</span></div>
+                <div class="tome-tag">📖 Tome I · Initiation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome I est un guide parfait pour débuter dans la pratique des rituels mystiques.</div>
+                <div class="author"><span class="icon">👤</span> Adama D. · <span style="color:#b8860b;">Mali</span></div>
+                <div class="tome-tag">📖 Tome I · Guide</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Le Tome I est très accessible, même pour les débutants. Les explications sont claires.</div>
+                <div class="author"><span class="icon">👤</span> Claire M. · <span style="color:#b8860b;">Genève</span></div>
+                <div class="tome-tag">📖 Tome I · Accessible</div>
+            </div>
+
+            <!-- ===== TOME II (12 témoignages) ===== -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome II a complètement transformé ma pratique des rituels. Les secrets des énergies subtiles sont dévoilés.</div>
+                <div class="author"><span class="icon">👤</span> Ibrahim D. · <span style="color:#b8860b;">Dakar</span></div>
+                <div class="tome-tag">📖 Tome II · Énergies subtiles</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les enseignements du Tome II sur la protection spirituelle m'ont sauvé de situations difficiles.</div>
+                <div class="author"><span class="icon">👤</span> Sophie L. · <span style="color:#b8860b;">Lyon</span></div>
+                <div class="tome-tag">📖 Tome II · Protection</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Un maître spirituel authentique. Le Tome II m'a apporté la clarté que je cherchais depuis 10 ans.</div>
+                <div class="author"><span class="icon">👤</span> Awa C. · <span style="color:#b8860b;">Bruxelles</span></div>
+                <div class="tome-tag">📖 Tome II · Clarté</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome II est une véritable mine d'or. Les rituels de guérison sont d'une efficacité remarquable.</div>
+                <div class="author"><span class="icon">👤</span> Fatima Z. · <span style="color:#b8860b;">Marrakech</span></div>
+                <div class="tome-tag">📖 Tome II · Guérison</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Très bon contenu sur les talismans et les amulettes. J'attends la suite avec impatience.</div>
+                <div class="author"><span class="icon">👤</span> Issa B. · <span style="color:#b8860b;">Ouagadougou</span></div>
+                <div class="tome-tag">📖 Tome II · Talismans</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les secrets de la voyance révélés dans le Tome II sont d'une précision stupéfiante.</div>
+                <div class="author"><span class="icon">👤</span> Mamadou S. · <span style="color:#b8860b;">Guinée</span></div>
+                <div class="tome-tag">📖 Tome II · Voyance</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Je pratique les rituels du Tome II depuis 3 mois. Ma vie a changé de manière spectaculaire.</div>
+                <div class="author"><span class="icon">👤</span> Oumar N. · <span style="color:#b8860b;">Niger</span></div>
+                <div class="tome-tag">📖 Tome II · Pratique</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les enseignements du Tome II sur les énergies m'ont permis de mieux comprendre le monde invisible.</div>
+                <div class="author"><span class="icon">👤</span> Pierre M. · <span style="color:#b8860b;">France</span></div>
+                <div class="tome-tag">📖 Tome II · Monde invisible</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome II m'a appris à canaliser les énergies pour ma protection et celle de mes proches.</div>
+                <div class="author"><span class="icon">👤</span> Aminata N. · <span style="color:#b8860b;">Sénégal</span></div>
+                <div class="tome-tag">📖 Tome II · Canalisation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les rituels du Tome II sont d'une puissance exceptionnelle. Je recommande vivement.</div>
+                <div class="author"><span class="icon">👤</span> Mamadou B. · <span style="color:#b8860b;">Mauritanie</span></div>
+                <div class="tome-tag">📖 Tome II · Puissance</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Le Tome II est très complet, j'aurais juste aimé plus d'exemples pratiques.</div>
+                <div class="author"><span class="icon">👤</span> Alice R. · <span style="color:#b8860b;">Canada</span></div>
+                <div class="tome-tag">📖 Tome II · Pratique</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome II m'a ouvert les portes d'une compréhension plus fine de la spiritualité.</div>
+                <div class="author"><span class="icon">👤</span> Mohamadou L. · <span style="color:#b8860b;">Cameroun</span></div>
+                <div class="tome-tag">📖 Tome II · Compréhension</div>
+            </div>
+
+            <!-- ===== TOME III (12 témoignages) ===== -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III révèle des secrets que j'ai cherchés pendant 20 ans. Une transmission puissante.</div>
+                <div class="author"><span class="icon">👤</span> Fatoumata B. · <span style="color:#b8860b;">Abidjan</span></div>
+                <div class="tome-tag">📖 Tome III · Secrets ultimes</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III est le couronnement d'une œuvre magistrale. Les rituels avancés sont d'une puissance inouïe.</div>
+                <div class="author"><span class="icon">👤</span> Moussa G. · <span style="color:#b8860b;">Niamey</span></div>
+                <div class="tome-tag">📖 Tome III · Rituels avancés</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III m'a ouvert les portes de la dimension spirituelle. Je ne suis plus le même.</div>
+                <div class="author"><span class="icon">👤</span> Khadija D. · <span style="color:#b8860b;">Dubai</span></div>
+                <div class="tome-tag">📖 Tome III · Dimension spirituelle</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Certains passages sont denses, mais la profondeur du Tome III est incomparable.</div>
+                <div class="author"><span class="icon">👤</span> N'Deye S. · <span style="color:#b8860b;">Saint-Louis</span></div>
+                <div class="tome-tag">📖 Tome III · Profondeur</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les enseignements du Tome III sur les rituels de protection sont d'une efficacité redoutable.</div>
+                <div class="author"><span class="icon">👤</span> Aliou N. · <span style="color:#b8860b;">Conakry</span></div>
+                <div class="tome-tag">📖 Tome III · Protection avancée</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III est une révélation. Les rituels de protection m'ont aidé à surmonter des épreuves.</div>
+                <div class="author"><span class="icon">👤</span> Amadou S. · <span style="color:#b8860b;">Mauritanie</span></div>
+                <div class="tome-tag">📖 Tome III · Protection</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les secrets du Tome III m'ont permis d'accéder à des dimensions que je croyais inaccessibles.</div>
+                <div class="author"><span class="icon">👤</span> Hassan E. · <span style="color:#b8860b;">Égypte</span></div>
+                <div class="tome-tag">📖 Tome III · Dimensions</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III m'a ouvert les yeux sur des réalités que j'ignorais. Une expérience transformatrice.</div>
+                <div class="author"><span class="icon">👤</span> Georges T. · <span style="color:#b8860b;">Cameroun</span></div>
+                <div class="tome-tag">📖 Tome III · Réalité</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III est le sommet de l'œuvre. Les rituels sont d'une précision chirurgicale.</div>
+                <div class="author"><span class="icon">👤</span> Yacouba S. · <span style="color:#b8860b;">Burkina</span></div>
+                <div class="tome-tag">📖 Tome III · Précision</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les secrets du Tome III m'ont permis de guérir des blessures spirituelles anciennes.</div>
+                <div class="author"><span class="icon">👤</span> Martine K. · <span style="color:#b8860b;">Bénin</span></div>
+                <div class="tome-tag">📖 Tome III · Guérison</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Le Tome III est excellent mais demande une certaine préparation spirituelle.</div>
+                <div class="author"><span class="icon">👤</span> Lucie M. · <span style="color:#b8860b;">Suisse</span></div>
+                <div class="tome-tag">📖 Tome III · Préparation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Tome III m'a apporté une compréhension nouvelle de l'univers spirituel.</div>
+                <div class="author"><span class="icon">👤</span> Souleymane K. · <span style="color:#b8860b;">Guinée</span></div>
+                <div class="tome-tag">📖 Tome III · Compréhension</div>
+            </div>
+
+            <!-- ===== COLLECTION COMPLÈTE (8 témoignages) ===== -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les trois tomes forment une bibliothèque spirituelle complète. Les rituels fonctionnent vraiment.</div>
+                <div class="author"><span class="icon">👤</span> Ousmane K. · <span style="color:#b8860b;">Bamako</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai acheté les trois tomes. Chacun est un bijou. Je les recommande à tous les chercheurs de vérité.</div>
+                <div class="author"><span class="icon">👤</span> Youssouf M. · <span style="color:#b8860b;">Nouakchott</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une œuvre magistrale qui mérite d'être étudiée et méditée. Les rituels sont d'une puissance rare.</div>
+                <div class="author"><span class="icon">👤</span> Hassan B. · <span style="color:#b8860b;">Rabat</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les trois tomes m'ont accompagné sur le chemin de la spiritualité. Une grâce.</div>
+                <div class="author"><span class="icon">👤</span> Aïcha N. · <span style="color:#b8860b;">Mali</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Chaque tome est une étape vers une compréhension plus profonde. Une œuvre indispensable.</div>
+                <div class="author"><span class="icon">👤</span> Mamadou T. · <span style="color:#b8860b;">Sénégal</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai offert la collection à plusieurs proches. Les retours sont tous exceptionnels.</div>
+                <div class="author"><span class="icon">👤</span> Awa N. · <span style="color:#b8860b;">Côte d'Ivoire</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les trois tomes sont une référence dans le domaine de la spiritualité mystique.</div>
+                <div class="author"><span class="icon">👤</span> Abdoulaye S. · <span style="color:#b8860b;">Niger</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une collection qui change la vie. Chaque tome apporte son lot de découvertes.</div>
+                <div class="author"><span class="icon">👤</span> Fatou D. · <span style="color:#b8860b;">Togo</span></div>
+                <div class="tome-tag">📚 Collection complète</div>
+            </div>
+
+            <!-- ===== TÉMOIGNAGES GÉNÉRAUX (16+ témoignages) ===== -->
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Cheikh Abdoul Walyy est un véritable guide. Ses écrits m'ont sauvé d'une profonde dépression spirituelle.</div>
+                <div class="author"><span class="icon">👤</span> Aïssatou D. · <span style="color:#b8860b;">N'Djaména</span></div>
+                <div class="tome-tag">🌟 Guérison spirituelle</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">La transmission du Cheikh est authentique. J'ai ressenti une énergie nouvelle après chaque lecture.</div>
+                <div class="author"><span class="icon">👤</span> Mohamed L. · <span style="color:#b8860b;">Tunis</span></div>
+                <div class="tome-tag">🌟 Transmission</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les secrets mystiques dévoilés dans ces tomes sont d'une précision qui dépasse tout ce que j'ai lu.</div>
+                <div class="author"><span class="icon">👤</span> Fatou K. · <span style="color:#b8860b;">Ziguinchor</span></div>
+                <div class="tome-tag">🌟 Précision</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai pratiqué les rituels du Tome I et II, les résultats sont bluffants. Merci Cheikh.</div>
+                <div class="author"><span class="icon">👤</span> Moussa F. · <span style="color:#b8860b;">Lomé</span></div>
+                <div class="tome-tag">🌟 Résultats</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une découverte exceptionnelle. Les enseignements du Cheikh ont changé ma vie à jamais.</div>
+                <div class="author"><span class="icon">👤</span> Claire M. · <span style="color:#b8860b;">Genève</span></div>
+                <div class="tome-tag">🌟 Transformation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★☆</div>
+                <div class="quote">Très bon contenu, j'aurais aimé plus de détails sur certains rituels, mais globalement excellent.</div>
+                <div class="author"><span class="icon">👤</span> David R. · <span style="color:#b8860b;">Marseille</span></div>
+                <div class="tome-tag">🌟 Approfondissement</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les tomes du Cheikh Abdoul Walyy sont une boussole spirituelle dans un monde en perte de sens.</div>
+                <div class="author"><span class="icon">👤</span> Souleymane D. · <span style="color:#b8860b;">Cotonou</span></div>
+                <div class="tome-tag">🌟 Boussole spirituelle</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une plume inspirée. Les mots du Cheikh portent une énergie qui dépasse la simple lecture.</div>
+                <div class="author"><span class="icon">👤</span> Élisabeth K. · <span style="color:#b8860b;">Québec</span></div>
+                <div class="tome-tag">🌟 Inspiration</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Cheikh Abdoul Walyy est un maître dans l'âme. Ses écrits sont d'une pureté rare.</div>
+                <div class="author"><span class="icon">👤</span> Fatou B. · <span style="color:#b8860b;">Sénégal</span></div>
+                <div class="tome-tag">🌟 Pureté</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une œuvre qui transcende le temps. Les rituels fonctionnent encore mieux que ce que j'espérais.</div>
+                <div class="author"><span class="icon">👤</span> Marie-José L. · <span style="color:#b8860b;">Belgique</span></div>
+                <div class="tome-tag">🌟 Efficacité</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Un maître spirituel d'une grande humilité. Ses écrits sont une bénédiction.</div>
+                <div class="author"><span class="icon">👤</span> Zara S. · <span style="color:#b8860b;">Comores</span></div>
+                <div class="tome-tag">🌟 Bénédiction</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les enseignements du Cheikh m'ont permis de trouver un équilibre spirituel durable.</div>
+                <div class="author"><span class="icon">👤</span> Antoine D. · <span style="color:#b8860b;">Belgique</span></div>
+                <div class="tome-tag">🌟 Équilibre</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Je me suis senti accompagné spirituellement à travers ces tomes. Une vraie guidance.</div>
+                <div class="author"><span class="icon">👤</span> Pascal M. · <span style="color:#b8860b;">France</span></div>
+                <div class="tome-tag">🌟 Guidance</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les secrets mystiques du Cheikh sont d'une profondeur qui ne cesse de m'émerveiller.</div>
+                <div class="author"><span class="icon">👤</span> Hawa C. · <span style="color:#b8860b;">Guinée</span></div>
+                <div class="tome-tag">🌟 Émerveillement</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une lecture qui élève l'âme et purifie le cœur. Je recommande à tous les chercheurs.</div>
+                <div class="author"><span class="icon">👤</span> Marie D. · <span style="color:#b8860b;">Suisse</span></div>
+                <div class="tome-tag">🌟 Élévation</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Le Cheikh Abdoul Walyy est une lumière dans le monde spirituel. Ses écrits sont essentiels.</div>
+                <div class="author"><span class="icon">👤</span> Moussa D. · <span style="color:#b8860b;">Tchad</span></div>
+                <div class="tome-tag">🌟 Lumière</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai trouvé dans ces tomes des réponses que je cherchais depuis des années.</div>
+                <div class="author"><span class="icon">👤</span> Jeanne N. · <span style="color:#b8860b;">Bénin</span></div>
+                <div class="tome-tag">🌟 Réponses</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les enseignements du Cheikh sont d'une actualité et d'une pertinence remarquables.</div>
+                <div class="author"><span class="icon">👤</span> Abdoulaye D. · <span style="color:#b8860b;">Mauritanie</span></div>
+                <div class="tome-tag">🌟 Pertinence</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une œuvre qui nous reconnecte à notre essence spirituelle profonde.</div>
+                <div class="author"><span class="icon">👤</span> Émilie R. · <span style="color:#b8860b;">Canada</span></div>
+                <div class="tome-tag">🌟 Reconnection</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les tomes du Cheikh Abdoul Walyy sont une source inépuisable de sagesse.</div>
+                <div class="author"><span class="icon">👤</span> Moustapha N. · <span style="color:#b8860b;">Niger</span></div>
+                <div class="tome-tag">🌟 Sagesse</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Je me sens en sécurité spirituellement depuis que j'ai intégré ces enseignements.</div>
+                <div class="author"><span class="icon">👤</span> Fatima A. · <span style="color:#b8860b;">Égypte</span></div>
+                <div class="tome-tag">🌟 Sécurité</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les rituels décrits sont simples à réaliser mais d'une efficacité surprenante.</div>
+                <div class="author"><span class="icon">👤</span> Robert C. · <span style="color:#b8860b;">France</span></div>
+                <div class="tome-tag">🌟 Simplicité</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Une transmission authentique qui touche au cœur des traditions mystiques africaines.</div>
+                <div class="author"><span class="icon">👤</span> Aminata K. · <span style="color:#b8860b;">Sénégal</span></div>
+                <div class="tome-tag">🌟 Tradition</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">Les tomes du Cheikh sont une invitation au voyage intérieur vers la connaissance.</div>
+                <div class="author"><span class="icon">👤</span> Yves M. · <span style="color:#b8860b;">Belgique</span></div>
+                <div class="tome-tag">🌟 Voyage</div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">★★★★★</div>
+                <div class="quote">J'ai trouvé dans ces écrits une force qui m'a permis de surmonter des obstacles majeurs.</div>
+                <div class="author"><span class="icon">👤</span> Koffi A. · <span style="color:#b8860b;">Côte d'Ivoire</span></div>
+                <div class="tome-tag">🌟 Force</div>
+            </div>
+        </div>
+
+        <div class="footer-credit">
+            <span class="icon">●</span> Latrou Shop · Cheikh Abdoul Walyy <span class="icon">●</span>
+        </div>
+    </div>
+</body>
+</html>
