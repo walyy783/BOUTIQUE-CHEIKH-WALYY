@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="bingbot" content="noindex, nofollow">
+    <title>Latrou Shop · Secrets Mystiques</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #0d0b1a 0%, #1a1630 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            color: #f0e9ff;
+        }
+
+        .shop-card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 4rem 4rem 3rem 3rem;
+            padding: 2.5rem 2rem 3rem;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3.8rem;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #f7e05e, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            margin-bottom: 0.5rem;
+            font-family: 'Times New Roman', serif;
+        }
+
+        .header h1 span {
+            font-weight: 700;
+            letter-spacing: 10px;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #b8a9d9;
+            letter-spacing: 3px;
+            word-spacing: 6px;
+            border-top: 1px solid rgba(212, 175, 55, 0.25);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            display: inline-block;
+            padding: 0.7rem 2.5rem;
+            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 60px;
+            font-weight: 300;
+        }
+
+        .subhead i {
+            color: #d4af37;
+            margin: 0 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.2rem;
+            margin: 3rem 0 2.5rem;
+        }
+
+        .tome {
+            background: rgba(20, 16, 40, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 2.5rem;
+            padding: 1.8rem 1.5rem 2rem;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.6);
+            transition: 0.25s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .tome:hover {
+            transform: translateY(-12px) scale(1.01);
+            border-color: #d4af37;
+            box-shadow: 0 30px 50px -10px #000000cc, 0 0 0 2px rgba(212, 175, 55, 0.3);
+            background: rgba(30, 24, 55, 0.8);
+        }
+
+        .tome-img {
+            width: 100%;
+            aspect-ratio: 1 / 1.2;
+            object-fit: cover;
+            border-radius: 1.8rem;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            transition: 0.3s;
+            background: #0d0b1a;
+        }
+
+        .tome:hover .tome-img {
+            border-color: #f7e05e;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .tome h3 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin: 1.2rem 0 0.3rem;
+            color: #f5e9b0;
+            letter-spacing: 2px;
+            font-family: 'Times New Roman', serif;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+            padding-bottom: 0.3rem;
+            width: 80%;
+        }
+
+        .tome .prix {
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: #d4af37;
+            margin: 0.6rem 0 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.2rem 1.8rem;
+            border-radius: 40px;
+            display: inline-block;
+            backdrop-filter: blur(2px);
+            border: 1px solid #b8860b55;
+        }
+
+        .btn-pay {
+            background: linear-gradient(145deg, #d4af37, #b8860b);
+            border: none;
+            border-radius: 60px;
+            padding: 0.9rem 1.8rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0d0b1a;
+            width: 100%;
+            max-width: 220px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 0 #6b4f0a, 0 10px 20px rgba(0, 0, 0, 0.4);
+            text-decoration: none;
+            letter-spacing: 1px;
+            border: 1px solid #f7e05e;
+            margin-top: 0.5rem;
+        }
+
+        .btn-pay i {
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+
+        .btn-pay:hover {
+            transform: scale(1.03) translateY(-3px);
+            box-shadow: 0 10px 0 #6b4f0a, 0 18px 30px rgba(0, 0, 0, 0.6);
+            background: linear-gradient(145deg, #e6c34a, #c99f1e);
+        }
+
+        .btn-pay:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #6b4f0a;
+        }
+
+        .testimonials {
+            margin: 3.5rem 0 2.5rem;
+            padding: 2rem 1.8rem;
+            background: rgba(10, 8, 20, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 3rem;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .testimonials-header h2 {
+            font-family: 'Times New Roman', serif;
+            font-weight: 300;
+            font-size: 2.6rem;
+            letter-spacing: 4px;
+            color: #f5e9b0;
+        }
+
+        .testimonials-header h2 i {
+            color: #d4af37;
+            margin: 0 10px;
+        }
+
+        .testimonials-header .sub {
+            color: #b8a9d9;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-top: 0.3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .testimonial-card {
+            background: rgba(20, 16, 40, 0.6);
+            border-radius: 1.8rem;
+            padding: 1.5rem 1.2rem;
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            transition: 0.25s ease;
+            text-align: left;
+        }
+
+        .testimonial-card:hover {
+            border-color: #d4af37;
+            background: rgba(30, 24, 55, 0.7);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .testimonial-card .stars {
+            color: #d4af37;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-card .stars .empty {
+            color: #4a3f5e;
+        }
+
+        .testimonial-card .quote {
+            font-style: italic;
+            color: #e2d9f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+        }
+
+        .testimonial-card .quote i {
+            color: #b8860b;
+            font-size: 0.8rem;
+            margin-right: 4px;
+            opacity: 0.7;
+        }
+
+        .testimonial-card .author {
+            font-weight: 400;
+            color: #b8a9d9;
+            font-size: 0.9rem;
+            border-top: 1px dashed #3a2e5a;
+            padding-top: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .testimonial-card .author i {
+            color: #d4af37;
+        }
+
+        .testimonial-card .tome-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(212, 175, 55, 0.15);
+            padding: 0.15rem 0.8rem;
+            border-radius: 30px;
+            color: #c9b37a;
+            border: 1px solid #b8860b33;
+            margin-top: 0.3rem;
+        }
+
+        .testimonials-footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: #b8a9d9;
+            letter-spacing: 1px;
+        }
+
+        .testimonials-footer i {
+            color: #d4af37;
+        }
+
+        .assistance {
+            margin: 3rem 0 1.5rem;
+            padding: 1.8rem 1.5rem;
+            background: rgba(10, 8, 20, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 4rem;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem 3.5rem;
+        }
+
+        .assistance-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.15rem;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.3rem 1.6rem 0.3rem 1.2rem;
+            border-radius: 60px;
+            border: 1px solid #3a2e5a;
+        }
+
+        .assistance-item i {
+            color: #d4af37;
+            font-size: 1.8rem;
+            width: 2rem;
+            text-align: center;
+        }
+
+        .assistance-item a {
+            color: #d4c9f0;
+            text-decoration: none;
+            font-weight: 400;
+            transition: 0.2s;
+            border-bottom: 1px dotted transparent;
+        }
+
+        .assistance-item a:hover {
+            color: #f7e05e;
+            border-bottom-color: #d4af37;
+        }
+
+        .footer-credit {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #6b5d8a;
+            letter-spacing: 2px;
+        }
+
+        .footer-credit i {
+            color: #b8860b;
+            margin: 0 6px;
+        }
+
+        @media (max-width: 680px) {
+            .shop-card {
+                padding: 1.5rem 1rem;
+                border-radius: 2.5rem;
+            }
+
+            .header h1 {
+                font-size: 2.8rem;
+                letter-spacing: 3px;
+            }
+
+            .subhead {
+                font-size: 0.9rem;
+                padding: 0.4rem 1.5rem;
+            }
+
+            .grid {
+                gap: 1.5rem;
+            }
+
+            .tome h3 {
+                font-size: 1.6rem;
+            }
+
+            .btn-pay {
+                font-size: 1.1rem;
+                padding: 0.7rem 1.2rem;
+                max-width: 180px;
+            }
+
+            .assistance {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.2rem;
+                border-radius: 2.5rem;
+            }
+
+            .assistance-item {
+                width: 100%;
+                justify-content: center;
+                padding: 0.3rem 0.8rem;
+                font-size: 1rem;
+            }
+            .testimonials {
+                padding: 1.2rem 0.8rem;
+            }
+            .testimonials-header h2 {
+                font-size: 1.8rem;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .btn-pay {
+                max-width: 100%;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .gold-dot {
+            color: #d4af37;
+            margin: 0 5px;
+        }
+
+        .tome .badge {
+            background: rgba(212, 175, 55, 0.15);
+            padding: 0.2rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #c9b37a;
+            border: 1px solid #b8860b44;
+            margin-top: -0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="shop-card">
+        <div class="header">
+            <h1>✦ Latrou <span>Shop</span> ✦</h1>
+            <div class="subhead">
+                <i class="fas fa-moon"></i> Cheikh Abdoul Walyy <i class="fas fa-star"></i> Secrets mystiques
+            </div>
+            <p style="margin-top: 0.8rem; color: #b3a3d6; font-style: italic; letter-spacing: 1px;">
+                <i class="fas fa-scroll"></i> Manuscrits sacrés · transmission d'énergie <i class="fas fa-scroll"></i>
+            </p>
+        </div>
+
+        <div class="grid">
+            <!-- Tome 1 : 5 200 F -->
+            <div class="tome">
+                <img class="tome-img" src="https://i.postimg.cc/YjB9wVFq/Screenshot-20260820-125122.jpg" alt="Secret mystique Tome 1" loading="lazy">
+                <h3>Tome I</h3>
+                <div class="prix"><i class="fas fa-coins"></i> 5 200 F</div>
+                <div class="badge"><i class="fas fa-key"></i> Accès immédiat</div>
+                <a href="https://new.sebpay.bj/pay/documents-pdf-tome-1-MCvf4I" target="_blank" class="btn-pay">
+                    <i class="fas fa-lock-open"></i> Payer
+                </a>
+            </div>
+
+            <!-- Tome 2 : 15 500 F -->
+            <div class="tome">
+                <img class="tome-img" src="https://i.postimg.cc/Qd05ZQ8x/Screenshot-20260820-125144.jpg" alt="Secret mystique Tome 2" loading="lazy">
+                <h3>Tome II</h3>
+                <div class="prix"><i class="fas fa-coins"></i> 15 500 F</div>
+                <div class="badge"><i class="fas fa-gem"></i> Édition rare</div>
+                <a href="https://new.sebpay.bj/pay/documents-pdf-tome-2-Gh70NE" target="_blank" class="btn-pay">
+                    <i class="fas fa-lock-open"></i> Payer
+                </a>
+            </div>
+
+            <!-- Tome 3 : 25 800 F -->
+            <div class="tome">
+                <img class="tome-img" src="https://i.postimg.cc/X7WyZHXv/Screenshot-20260820-125200.jpg" alt="Secret mystique Tome 3" loading="lazy">
+                <h3>Tome III</h3>
+                <div class="prix"><i class="fas fa-coins"></i> 25 800 F</div>
+                <div class="badge"><i class="fas fa-crown"></i> Ultime volume</div>
+                <a href="https://new.sebpay.bj/pay/document-pdf-tome-3-O0DlhW" target="_blank" class="btn-pay">
+                    <i class="fas fa-lock-open"></i> Payer
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION TÉMOIGNAGES ÉLARGIE -->
+        <div class="testimonials">
+            <div class="testimonials-header">
+                <h2><i class="fas fa-quote-left"></i> Témoignages <i class="fas fa-quote-right"></i></h2>
+                <div class="sub">+ de 200 lecteurs à travers le monde</div>
+            </div>
+
+            <div class="testimonial-grid">
+                <!-- 5 étoiles -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Une révélation ! Le Tome I m'a aidé à trouver la paix intérieure que je cherchais depuis des années.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Mariam S. · <span style="color:#b8860b;">Paris</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome I</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome II est d'une profondeur exceptionnelle. Les enseignements du Cheikh sont d'une clarté rare.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Ibrahim D. · <span style="color:#b8860b;">Dakar</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome II</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome III a changé ma perception du monde. Une transmission d'énergie authentique.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Fatoumata B. · <span style="color:#b8860b;">Abidjan</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome III</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> J'ai acheté les trois tomes. Chacun est un bijou. Je les recommande à tous les chercheurs de vérité.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Ousmane K. · <span style="color:#b8860b;">Bamako</span></div>
+                    <div class="tome-tag"><i class="fas fa-layer-group"></i> Collection complète</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome I est parfait pour débuter. Simple, profond et puissant. Merci Cheikh Abdoul Walyy.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Amina T. · <span style="color:#b8860b;">Casablanca</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome I</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Un voyage spirituel unique. Le Tome III m'a ouvert des portes que je pensais inaccessibles.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Moussa G. · <span style="color:#b8860b;">Niamey</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome III</div>
+                </div>
+
+                <!-- 4 étoiles -->
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Très bon contenu, j'aurais aimé un peu plus de détails sur les rituels, mais globalement excellent.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Sophie L. · <span style="color:#b8860b;">Lyon</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome II</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome I est une belle introduction. J'attends avec impatience le Tome II.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Karim H. · <span style="color:#b8860b;">Alger</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome I</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Très satisfaite du Tome III. La transmission est puissante, bien que certains passages soient denses.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> N'Deye S. · <span style="color:#b8860b;">Saint-Louis</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome III</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Un contenu de qualité, livraison rapide. Je recommande le Tome II pour ceux qui veulent approfondir.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Issa B. · <span style="color:#b8860b;">Ouagadougou</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome II</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> J'ai beaucoup apprécié la profondeur du Tome I. Parfait pour une première approche.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Hélène M. · <span style="color:#b8860b;">Toulouse</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome I</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star empty"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome III est une véritable pépite. Seul petit bémol : quelques coquilles mineures.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Aliou N. · <span style="color:#b8860b;">Conakry</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome III</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Un maître spirituel authentique. Le Tome II m'a apporté la clarté que je cherchais.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Awa C. · <span style="color:#b8860b;">Bruxelles</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome II</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Les trois tomes sont exceptionnels. Une bibliothèque spirituelle à garder près de soi.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Youssouf M. · <span style="color:#b8860b;">Nouakchott</span></div>
+                    <div class="tome-tag"><i class="fas fa-layer-group"></i> Collection complète</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <div class="quote"><i class="fas fa-quote-left"></i> Le Tome I est une porte d'entrée parfaite. J'ai ressenti une énergie positive dès la première lecture.</div>
+                    <div class="author"><i class="fas fa-user-circle"></i> Chantal B. · <span style="color:#b8860b;">Montréal</span></div>
+                    <div class="tome-tag"><i class="fas fa-book"></i> Tome I</div>
+                </div>
+            </div>
+
+            <div class="testimonials-footer">
+                <i class="fas fa-arrow-right"></i> Rejoignez notre communauté de chercheurs spirituels <i class="fas fa-arrow-left"></i>
+            </div>
+        </div>
+
+        <div class="assistance">
+            <div class="assistance-item">
+                <i class="fab fa-whatsapp"></i>
+                <a href="https://wa.me/22677020069" target="_blank">+226 77 02 00 69</a>
+            </div>
+            <div class="assistance-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:muslimwalyy@gmail.com">muslimwalyy@gmail.com</a>
+            </div>
+            <div class="assistance-item">
+                <i class="fas fa-headset"></i>
+                <span style="color:#b8a9d9;">Assistance 24/7</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 1rem 0 0; color: #8a7aa8; font-size: 0.95rem; border-top: 1px solid #2e2545; padding-top: 1.2rem;">
+            <i class="fas fa-hand-sparkles" style="color: #d4af37;"></i> 
+            Chaque tome est un grimoire numérique · paiement sécurisé via SebPay 
+            <i class="fas fa-hand-sparkles" style="color: #d4af37;"></i>
+        </div>
+
+        <div class="footer-credit">
+            <i class="fas fa-circle gold-dot"></i> Latrou Shop · Cheikh Abdoul Walyy <i class="fas fa-circle gold-dot"></i>
+        </div>
+    </div>
+</body>
+</html>
