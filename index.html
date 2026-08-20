@@ -8,8 +8,11 @@
     <meta name="bingbot" content="noindex, nofollow">
     <title>Latrou Shop · Secrets Mystiques</title>
     <style>
-        /* ===== STYLES COMPLETS ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
@@ -34,7 +37,10 @@
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
 
-        .header { text-align: center; margin-bottom: 3rem; }
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
         .header h1 {
             font-size: 3.8rem;
             font-weight: 300;
@@ -48,7 +54,10 @@
             margin-bottom: 0.5rem;
             font-family: 'Times New Roman', serif;
         }
-        .header h1 span { font-weight: 700; letter-spacing: 10px; }
+        .header h1 span {
+            font-weight: 700;
+            letter-spacing: 10px;
+        }
 
         .subhead {
             font-size: 1.2rem;
@@ -64,7 +73,54 @@
             border-radius: 60px;
             font-weight: 300;
         }
-        .subhead .icon { color: #d4af37; margin: 0 8px; }
+        .subhead .icon {
+            color: #d4af37;
+            margin: 0 8px;
+        }
+
+        /* ---- Éloges de l'auteur ---- */
+        .author-praise {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(4px);
+        }
+        .author-praise h2 {
+            font-family: 'Times New Roman', serif;
+            font-size: 1.8rem;
+            color: #f5e9b0;
+            letter-spacing: 2px;
+            margin-bottom: 0.8rem;
+        }
+        .author-praise h2 .icon {
+            color: #d4af37;
+            margin: 0 8px;
+        }
+        .author-praise p {
+            color: #d4c9f0;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .author-praise .highlight {
+            color: #f7e05e;
+            font-weight: 500;
+        }
+        .author-praise .seal {
+            display: inline-block;
+            margin-top: 0.8rem;
+            padding: 0.3rem 2rem;
+            border: 1px solid #d4af37;
+            border-radius: 60px;
+            color: #d4af37;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
 
         .grid {
             display: grid;
@@ -159,9 +215,12 @@
             box-shadow: 0 10px 0 #6b4f0a, 0 18px 30px rgba(0, 0, 0, 0.6);
             background: linear-gradient(145deg, #e6c34a, #c99f1e);
         }
-        .btn-pay:active { transform: translateY(5px); box-shadow: 0 3px 0 #6b4f0a; }
+        .btn-pay:active {
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #6b4f0a;
+        }
 
-        /* ---- Témoignages réduits ---- */
+        /* ---- Témoignages ---- */
         .testimonials {
             margin: 3.5rem 0 2.5rem;
             padding: 2rem 1.8rem;
@@ -170,7 +229,10 @@
             border-radius: 3rem;
             border: 1px solid rgba(212, 175, 55, 0.2);
         }
-        .testimonials-header { text-align: center; margin-bottom: 2rem; }
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
         .testimonials-header h2 {
             font-family: 'Times New Roman', serif;
             font-weight: 300;
@@ -178,12 +240,20 @@
             letter-spacing: 4px;
             color: #f5e9b0;
         }
-        .testimonials-header h2 .icon { color: #d4af37; margin: 0 10px; }
-        .testimonials-header .sub { color: #b8a9d9; font-size: 0.95rem; letter-spacing: 2px; margin-top: 0.3rem; }
+        .testimonials-header h2 .icon {
+            color: #d4af37;
+            margin: 0 10px;
+        }
+        .testimonials-header .sub {
+            color: #b8a9d9;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-top: 0.3rem;
+        }
 
         .testimonial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 1.2rem;
         }
         .testimonial-card {
@@ -199,8 +269,15 @@
             background: rgba(30, 24, 55, 0.7);
             transform: translateY(-3px);
         }
-        .testimonial-card .stars { color: #d4af37; font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 0.4rem; }
-        .testimonial-card .stars .empty { color: #4a3f5e; }
+        .testimonial-card .stars {
+            color: #d4af37;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.4rem;
+        }
+        .testimonial-card .stars .empty {
+            color: #4a3f5e;
+        }
         .testimonial-card .quote {
             font-style: italic;
             color: #e2d9f0;
@@ -218,7 +295,9 @@
             align-items: center;
             gap: 6px;
         }
-        .testimonial-card .author .icon { color: #d4af37; }
+        .testimonial-card .author .icon {
+            color: #d4af37;
+        }
         .testimonial-card .tome-tag {
             font-size: 0.6rem;
             text-transform: uppercase;
@@ -231,14 +310,45 @@
             display: inline-block;
             margin-top: 0.2rem;
         }
+
         .testimonials-footer {
             text-align: center;
             margin-top: 1.5rem;
-            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .testimonials-footer .text {
             color: #b8a9d9;
+            font-size: 0.95rem;
             letter-spacing: 1px;
         }
-        .testimonials-footer .icon { color: #d4af37; }
+        .testimonials-footer .text .icon {
+            color: #d4af37;
+        }
+
+        .btn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: transparent;
+            border: 2px solid #d4af37;
+            border-radius: 60px;
+            padding: 0.7rem 2.2rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #f7e05e;
+            text-decoration: none;
+            transition: 0.3s ease;
+            letter-spacing: 1px;
+        }
+        .btn-more:hover {
+            background: #d4af37;
+            color: #0d0b1a;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+            transform: scale(1.03);
+        }
 
         /* ---- Assistance ---- */
         .assistance {
@@ -264,7 +374,10 @@
             border-radius: 60px;
             border: 1px solid #3a2e5a;
         }
-        .assistance-item .icon { color: #d4af37; font-size: 1.6rem; }
+        .assistance-item .icon {
+            color: #d4af37;
+            font-size: 1.6rem;
+        }
         .assistance-item a {
             color: #d4c9f0;
             text-decoration: none;
@@ -272,7 +385,10 @@
             transition: 0.2s;
             border-bottom: 1px dotted transparent;
         }
-        .assistance-item a:hover { color: #f7e05e; border-bottom-color: #d4af37; }
+        .assistance-item a:hover {
+            color: #f7e05e;
+            border-bottom-color: #d4af37;
+        }
 
         .badge {
             background: rgba(212, 175, 55, 0.15);
@@ -285,27 +401,86 @@
             border: 1px solid #b8860b44;
             margin-top: -0.2rem;
         }
-        .gold-dot { color: #d4af37; margin: 0 5px; }
-        .footer-credit { text-align: center; margin-top: 2rem; font-size: 0.95rem; color: #6b5d8a; letter-spacing: 2px; }
-        .footer-credit .icon { color: #b8860b; margin: 0 6px; }
+        .gold-dot {
+            color: #d4af37;
+            margin: 0 5px;
+        }
+        .footer-credit {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: #6b5d8a;
+            letter-spacing: 2px;
+        }
+        .footer-credit .icon {
+            color: #b8860b;
+            margin: 0 6px;
+        }
 
         @media (max-width: 680px) {
-            .shop-card { padding: 1.5rem 1rem; border-radius: 2.5rem; }
-            .header h1 { font-size: 2.8rem; letter-spacing: 3px; }
-            .subhead { font-size: 0.9rem; padding: 0.4rem 1.5rem; }
-            .grid { gap: 1.5rem; }
-            .tome h3 { font-size: 1.6rem; }
-            .btn-pay { font-size: 1.1rem; padding: 0.7rem 1.2rem; max-width: 180px; }
-            .assistance { flex-direction: column; align-items: center; gap: 1rem; padding: 1.2rem; border-radius: 2.5rem; }
-            .assistance-item { width: 100%; justify-content: center; padding: 0.3rem 0.8rem; font-size: 1rem; }
-            .testimonials { padding: 1.2rem 0.8rem; }
-            .testimonials-header h2 { font-size: 1.8rem; }
-            .testimonial-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+            .shop-card {
+                padding: 1.5rem 1rem;
+                border-radius: 2.5rem;
+            }
+            .header h1 {
+                font-size: 2.8rem;
+                letter-spacing: 3px;
+            }
+            .subhead {
+                font-size: 0.9rem;
+                padding: 0.4rem 1.5rem;
+            }
+            .grid {
+                gap: 1.5rem;
+            }
+            .tome h3 {
+                font-size: 1.6rem;
+            }
+            .btn-pay {
+                font-size: 1.1rem;
+                padding: 0.7rem 1.2rem;
+                max-width: 180px;
+            }
+            .assistance {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 1.2rem;
+                border-radius: 2.5rem;
+            }
+            .assistance-item {
+                width: 100%;
+                justify-content: center;
+                padding: 0.3rem 0.8rem;
+                font-size: 1rem;
+            }
+            .testimonials {
+                padding: 1.2rem 0.8rem;
+            }
+            .testimonials-header h2 {
+                font-size: 1.8rem;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .author-praise h2 {
+                font-size: 1.4rem;
+            }
+            .author-praise p {
+                font-size: 0.95rem;
+            }
         }
         @media (max-width: 480px) {
-            .header h1 { font-size: 2.2rem; }
-            .btn-pay { max-width: 100%; }
-            .testimonial-grid { grid-template-columns: 1fr; }
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            .btn-pay {
+                max-width: 100%;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -320,6 +495,24 @@
             <p style="margin-top: 0.8rem; color: #b3a3d6; font-style: italic; letter-spacing: 1px;">
                 <span style="color:#d4af37;">✦</span> Manuscrits sacrés · transmission d'énergie <span style="color:#d4af37;">✦</span>
             </p>
+        </div>
+
+        <!-- ÉLOGES DE L'AUTEUR -->
+        <div class="author-praise">
+            <h2><span class="icon">✦</span> Cheikh Abdoul Walyy <span class="icon">✦</span></h2>
+            <p>
+                <span class="highlight">Maître spirituel</span> et gardien des traditions mystiques, le Cheikh Abdoul Walyy
+                transmet un <span class="highlight">savoir ancestral</span> à travers ses écrits sacrés.
+                Ses enseignements, issus d'une <span class="highlight">chaîne initiatique</span> ininterrompue,
+                dévoilent les <span class="highlight">secrets des rituels</span> et des pratiques spirituelles
+                qui <span class="highlight">éveillent la conscience</span> et élèvent l'âme.
+            </p>
+            <p style="margin-top: 0.6rem; color: #c9b37a;">
+                <span style="color:#d4af37;">✦</span> <span class="highlight">30 ans</span> de pratique mystique
+                <span style="color:#d4af37;">✦</span> Transmission des <span class="highlight">rituels secrets</span>
+                <span style="color:#d4af37;">✦</span> Des <span class="highlight">milliers</span> de disciples à travers le monde
+            </p>
+            <div class="seal">✧ Gardien du savoir ancestral ✧</div>
         </div>
 
         <!-- GRILLE TOMES -->
@@ -355,59 +548,64 @@
             </div>
         </div>
 
-        <!-- TÉMOIGNAGES (réduits à 6 pour la vitesse) -->
+        <!-- TÉMOIGNAGES (6 sur la page d'accueil) -->
         <div class="testimonials">
             <div class="testimonials-header">
                 <h2><span class="icon">❝</span> Témoignages <span class="icon">❞</span></h2>
-                <div class="sub">+ de 200 lecteurs à travers le monde</div>
+                <div class="sub">+ de 300 lecteurs à travers le monde</div>
             </div>
 
             <div class="testimonial-grid">
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">Une révélation ! Le Tome I m'a aidé à trouver la paix intérieure.</div>
+                    <div class="quote">Le rituel du Tome I m'a ouvert une porte vers l'invisible. Une expérience que je n'oublierai jamais.</div>
                     <div class="author"><span class="icon">👤</span> Mariam S. · <span style="color:#b8860b;">Paris</span></div>
-                    <div class="tome-tag">📖 Tome I</div>
+                    <div class="tome-tag">📖 Tome I · Rituel d'éveil</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">Le Tome II est d'une profondeur exceptionnelle. Enseignements d'une clarté rare.</div>
+                    <div class="quote">La clarté des enseignements du Tome II m'a permis de comprendre les mécanismes des énergies subtiles.</div>
                     <div class="author"><span class="icon">👤</span> Ibrahim D. · <span style="color:#b8860b;">Dakar</span></div>
-                    <div class="tome-tag">📖 Tome II</div>
+                    <div class="tome-tag">📖 Tome II · Énergies</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">Le Tome III a changé ma perception du monde. Transmission authentique.</div>
+                    <div class="quote">Le Tome III révèle des secrets que j'ai cherchés pendant 20 ans. Une transmission puissante.</div>
                     <div class="author"><span class="icon">👤</span> Fatoumata B. · <span style="color:#b8860b;">Abidjan</span></div>
-                    <div class="tome-tag">📖 Tome III</div>
+                    <div class="tome-tag">📖 Tome III · Secrets</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">J'ai acheté les trois tomes. Chacun est un bijou. Je les recommande vivement.</div>
+                    <div class="quote">Les trois tomes forment une bibliothèque spirituelle complète. Les rituels fonctionnent vraiment.</div>
                     <div class="author"><span class="icon">👤</span> Ousmane K. · <span style="color:#b8860b;">Bamako</span></div>
                     <div class="tome-tag">📚 Collection complète</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★☆</div>
-                    <div class="quote">Très bon contenu, quelques détails en plus auraient été parfaits.</div>
+                    <div class="quote">Le Tome II m'a apporté des réponses concrètes sur la protection spirituelle. Très pratique.</div>
                     <div class="author"><span class="icon">👤</span> Sophie L. · <span style="color:#b8860b;">Lyon</span></div>
-                    <div class="tome-tag">📖 Tome II</div>
+                    <div class="tome-tag">📖 Tome II · Protection</div>
                 </div>
 
                 <div class="testimonial-card">
                     <div class="stars">★★★★★</div>
-                    <div class="quote">Un maître spirituel authentique. Le Tome II m'a apporté la clarté.</div>
+                    <div class="quote">Cheikh Abdoul Walyy est un véritable maître. Ses écrits sont d'une authenticité rare.</div>
                     <div class="author"><span class="icon">👤</span> Awa C. · <span style="color:#b8860b;">Bruxelles</span></div>
-                    <div class="tome-tag">📖 Tome II</div>
+                    <div class="tome-tag">📖 Tome II · Enseignements</div>
                 </div>
             </div>
 
             <div class="testimonials-footer">
-                <span class="icon">➜</span> Rejoignez notre communauté de chercheurs spirituels <span class="icon">➜</span>
+                <div class="text">
+                    <span class="icon">✦</span> Rejoignez notre communauté de chercheurs spirituels <span class="icon">✦</span>
+                </div>
+                <a href="temoignages.html" class="btn-more">
+                    <span>📖</span> Voir tous les témoignages (35+)
+                </a>
             </div>
         </div>
 
