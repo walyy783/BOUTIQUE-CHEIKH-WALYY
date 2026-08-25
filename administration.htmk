@@ -1,0 +1,2542 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latrou - Administration Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #7209b7;
+            --secondary-dark: #5a08a3;
+            --success: #2ecc71;
+            --success-dark: #27ae60;
+            --danger: #e74c3c;
+            --danger-dark: #c0392b;
+            --warning: #f39c12;
+            --warning-dark: #d35400;
+            --info: #3498db;
+            --info-dark: #2980b9;
+            --vip1: #ff6b6b;
+            --vip2: #feca57;
+            --vip3: #48dbfb;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --border-radius: 10px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Login Screen */
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 40px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-logo {
+            color: var(--primary);
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .login-container h2 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .login-container p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+            background: white;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: var(--success-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: var(--danger-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: var(--warning-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background: var(--info);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: var(--info-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-light {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-light:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            color: var(--danger);
+            margin-top: 10px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a2530 100%);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .brand-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .brand-text p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: var(--dark);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-button {
+            padding: 18px 25px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.8);
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .tab-button.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-button i {
+            margin-right: 8px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard Cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .dashboard-card h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .card-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: var(--light);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .section-header h2 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Image Preview */
+        .image-preview {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            border: 2px dashed var(--primary);
+            padding: 5px;
+            background: white;
+        }
+
+        /* Items Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .item-card.editing {
+            border-color: var(--warning);
+            background: #fff9e6;
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .item-content {
+            padding: 20px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .item-title {
+            font-size: 1.3rem;
+            color: var(--dark);
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .item-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .status-active {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-inactive {
+            background: var(--danger);
+            color: white;
+        }
+
+        .item-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .item-details {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: var(--gray);
+        }
+
+        .detail-value {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .item-id {
+            font-size: 0.8rem;
+            color: var(--gray);
+            font-family: monospace;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .item-actions button {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Credit Management */
+        .credit-summary {
+            background: linear-gradient(135deg, var(--info) 0%, var(--info-dark) 100%);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .credit-info h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .credit-amount {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .spent-amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0.9;
+        }
+
+        .credit-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .control-form {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .control-form h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* VIP Badges */
+        .vip-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .vip-badge.vip1 { background: var(--vip1); color: white; }
+        .vip-badge.vip2 { background: var(--vip2); color: #333; }
+        .vip-badge.vip3 { background: var(--vip3); color: #333; }
+
+        .vip-toggle-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .vip-toggle {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid #e0e0e0;
+        }
+
+        .vip-toggle.active {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .vip-toggle.active.vip1 { box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2); }
+        .vip-toggle.active.vip2 { box-shadow: 0 0 0 3px rgba(254, 202, 87, 0.2); }
+        .vip-toggle.active.vip3 { box-shadow: 0 0 0 3px rgba(72, 219, 251, 0.2); }
+
+        .vip-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .vip-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .vip-price {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-top: 10px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--success);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* User Info Card */
+        .user-info-card {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a2530 100%);
+            color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .user-info-card h4 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .user-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .user-detail-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .user-detail-item .label {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .user-detail-item .value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* Loading & Empty States */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .loading i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 40px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+        }
+
+        .empty-state h3 {
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            max-width: 400px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.warning {
+            background: var(--warning);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            max-width: 500px;
+            width: 90%;
+            box-shadow: var(--box-shadow);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .modal p {
+            color: var(--gray);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header-stats {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 0;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+                text-align: left;
+                border-bottom: none;
+                border-right: 3px solid transparent;
+            }
+            
+            .tab-button.active {
+                border-right-color: var(--primary);
+                border-bottom: none;
+            }
+            
+            .dashboard-cards,
+            .items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .credit-summary {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-actions button {
+                width: 100%;
+            }
+            
+            .vip-toggle-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-logo">
+            <i class="fas fa-lock"></i>
+        </div>
+        <h2>Administration Latrou</h2>
+        <p>Accès sécurisé au panneau d'administration</p>
+        <div class="form-group">
+            <label for="passwordInput">Mot de passe</label>
+            <input type="password" id="passwordInput" placeholder="Entrez votre mot de passe">
+        </div>
+        <button class="btn-primary" onclick="checkPassword()">
+            <i class="fas fa-sign-in-alt"></i> Se Connecter
+        </button>
+        <div class="login-error" id="loginError">
+            <i class="fas fa-exclamation-circle"></i> Mot de passe incorrect!
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <header>
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>Latrou Administration</h1>
+                    <p>Gestion Premium • Contrôle Total • Temps Réel</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="statsPosts">0</div>
+                    <div class="stat-label">Publications</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statsSecrets">0</div>
+                    <div class="stat-label">Secrets</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statsSports">0</div>
+                    <div class="stat-label">Paris Actifs</div>
+                </div>
+                <button class="btn-danger" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Tableau de Bord
+            </button>
+            <button class="tab-button" onclick="showTab('posts')">
+                <i class="fas fa-newspaper"></i> Publications
+            </button>
+            <button class="tab-button" onclick="showTab('secrets')">
+                <i class="fas fa-lock"></i> Secrets
+            </button>
+            <button class="tab-button" onclick="showTab('sports')">
+                <i class="fas fa-futbol"></i> Paris Sportifs
+            </button>
+            <button class="tab-button" onclick="showTab('subscriptions')">
+                <i class="fas fa-gem"></i> Abonnements VIP
+            </button>
+            <button class="tab-button" onclick="showTab('credits')">
+                <i class="fas fa-coins"></i> Gestion Crédits
+            </button>
+            <button class="tab-button" onclick="showTab('spent')">
+                <i class="fas fa-chart-line"></i> Dépenses
+            </button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-cards">
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="card-value" id="dashboardPosts">0</div>
+                    <h3>Publications</h3>
+                    <p class="card-description">Contenu publié sur le site</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="card-value" id="dashboardSecrets">0</div>
+                    <h3>Secrets</h3>
+                    <p class="card-description">Contenu exclusif verrouillé</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="card-value" id="dashboardSports">0</div>
+                    <h3>Paris Sportifs</h3>
+                    <p class="card-description">Pronostics disponibles</p>
+                </div>
+                <div class="dashboard-card">
+                    <div class="card-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="card-value" id="dashboardCredits">0</div>
+                    <h3>Crédits Totaux</h3>
+                    <p class="card-description">Solde global des utilisateurs</p>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-history"></i> Activité Récente</h2>
+                    <button class="btn-light" onclick="refreshAll()">
+                        <i class="fas fa-sync-alt"></i> Actualiser
+                    </button>
+                </div>
+                <div id="activityContainer" class="items-grid">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Chargement de l'activité...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts Tab -->
+        <div id="posts" class="tab-content">
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 id="postFormTitle"><i class="fas fa-plus-circle"></i> Nouvelle Publication</h2>
+                    <div class="form-actions">
+                        <button type="button" onclick="resetPostForm()" class="btn-warning" id="postCancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
+                <form id="postForm">
+                    <input type="hidden" id="postId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="title">Titre</label>
+                            <input type="text" id="title" required placeholder="Titre attractif...">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image (URL)</label>
+                            <input type="text" id="image" placeholder="https://exemple.com/image.jpg">
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="description">Description</label>
+                            <textarea id="description" required placeholder="Description détaillée..."></textarea>
+                        </div>
+                    </div>
+                    <div class="image-preview" id="imagePreview">
+                        <img id="preview" src="" alt="Aperçu">
+                    </div>
+                    <button type="submit" class="btn-primary" id="postSubmitBtn" style="margin-top: 20px;">
+                        <i class="fas fa-paper-plane"></i> Publier
+                    </button>
+                </form>
+            </div>
+
+            <div class="section-header">
+                <h2><i class="fas fa-list"></i> Publications Existantes</h2>
+                <div class="form-actions">
+                    <span class="detail-value" id="postsCount">0 publications</span>
+                </div>
+            </div>
+            <div id="adminPostsContainer" class="items-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des publications...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secrets Tab -->
+        <div id="secrets" class="tab-content">
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 id="secretFormTitle"><i class="fas fa-plus-circle"></i> Nouveau Secret</h2>
+                    <div class="form-actions">
+                        <button type="button" onclick="resetSecretForm()" class="btn-warning" id="secretCancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
+                <form id="secretForm">
+                    <input type="hidden" id="secretId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="secretTitle">Titre</label>
+                            <input type="text" id="secretTitle" required placeholder="Nom du secret">
+                        </div>
+                        <div class="form-group">
+                            <label for="requiredCredits">Crédits requis</label>
+                            <input type="number" id="requiredCredits" required min="0" placeholder="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="unlockCode">Code de déverrouillage</label>
+                            <input type="number" id="unlockCode" required placeholder="1234" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label for="secretImage">Image (URL)</label>
+                            <input type="text" id="secretImage" placeholder="https://exemple.com/image.jpg">
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="secretDescription">Description</label>
+                            <textarea id="secretDescription" required placeholder="Description du secret..."></textarea>
+                        </div>
+                    </div>
+                    <div class="image-preview" id="secretImagePreview">
+                        <img id="secretPreview" src="" alt="Aperçu">
+                    </div>
+                    <button type="submit" class="btn-secondary" id="secretSubmitBtn" style="margin-top: 20px;">
+                        <i class="fas fa-lock"></i> Créer Secret
+                    </button>
+                </form>
+            </div>
+
+            <div class="section-header">
+                <h2><i class="fas fa-list"></i> Secrets Actifs</h2>
+                <div class="form-actions">
+                    <span class="detail-value" id="secretsCount">0 secrets</span>
+                </div>
+            </div>
+            <div id="secretsContainer" class="items-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des secrets...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sports Tab -->
+        <div id="sports" class="tab-content">
+            <div class="form-section">
+                <div class="section-header">
+                    <h2 id="sportFormTitle"><i class="fas fa-plus-circle"></i> Nouveau Paris Sportif</h2>
+                    <div class="form-actions">
+                        <button type="button" onclick="resetSportForm()" class="btn-warning" id="sportCancelBtn" style="display: none;">
+                            <i class="fas fa-times"></i> Annuler
+                        </button>
+                    </div>
+                </div>
+                <form id="sportForm">
+                    <input type="hidden" id="sportId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="sportTitle">Titre</label>
+                            <input type="text" id="sportTitle" required placeholder="Nom du pari">
+                        </div>
+                        <div class="form-group">
+                            <label for="sportEtat">Statut</label>
+                            <select id="sportEtat" required>
+                                <option value="true">Actif</option>
+                                <option value="false">Inactif</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="sportRequiredCredits">Crédits requis</label>
+                            <input type="number" id="sportRequiredCredits" required min="0" placeholder="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="sportUnlockCode">Code de déverrouillage</label>
+                            <input type="number" id="sportUnlockCode" required placeholder="1234" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label for="sportImage">Image (URL)</label>
+                            <input type="text" id="sportImage" placeholder="https://exemple.com/image.jpg">
+                        </div>
+                        <div class="form-group form-full-width">
+                            <label for="sportDescription">Description</label>
+                            <textarea id="sportDescription" required placeholder="Description du pari..."></textarea>
+                        </div>
+                    </div>
+                    <div class="image-preview" id="sportImagePreview">
+                        <img id="sportPreview" src="" alt="Aperçu">
+                    </div>
+                    <button type="submit" class="btn-info" id="sportSubmitBtn" style="margin-top: 20px;">
+                        <i class="fas fa-futbol"></i> Publier Paris
+                    </button>
+                </form>
+            </div>
+
+            <div class="section-header">
+                <h2><i class="fas fa-list"></i> Paris Sportifs</h2>
+                <div class="form-actions">
+                    <span class="detail-value" id="sportsCount">0 paris</span>
+                </div>
+            </div>
+            <div id="sportsContainer" class="items-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Chargement des paris sportifs...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscriptions Tab - Nouvelle section VIP -->
+        <div id="subscriptions" class="tab-content">
+            <div class="credit-summary">
+                <div class="credit-info">
+                    <h3><i class="fas fa-gem"></i> Gestion des Abonnements VIP</h3>
+                    <p>Gérez les niveaux d'abonnement des utilisateurs</p>
+                </div>
+                <div class="spent-amount" id="vipStats">VIP Actifs</div>
+            </div>
+
+            <div class="form-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i> Rechercher un Utilisateur</h2>
+                </div>
+                <form id="vipSearchForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="vipEmail">Adresse Email</label>
+                            <input type="email" id="vipEmail" required placeholder="exemple@email.com">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </form>
+            </div>
+
+            <div id="vipUserInfo" style="display: none;">
+                <div class="user-info-card">
+                    <h4><i class="fas fa-user-circle"></i> Informations Utilisateur</h4>
+                    <div class="user-details">
+                        <div class="user-detail-item">
+                            <div class="label">ID Utilisateur</div>
+                            <div class="value" id="vipUserId">-</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="label">Email</div>
+                            <div class="value" id="vipUserEmail">-</div>
+                        </div>
+                        <div class="user-detail-item">
+                            <div class="label">Nom d'utilisateur</div>
+                            <div class="value" id="vipUsername">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-crown"></i> Niveaux VIP</h2>
+                    </div>
+                    <div class="vip-toggle-group">
+                        <div class="vip-toggle" id="vip1Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="vip-name">VIP 1</div>
+                            <div class="vip-price">Accès Premium Basique</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip1Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="vip-toggle" id="vip2Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown" style="color: var(--vip2);"></i>
+                            </div>
+                            <div class="vip-name">VIP 2</div>
+                            <div class="vip-price">Accès Premium Avancé</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip2Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="vip-toggle" id="vip3Toggle">
+                            <div class="vip-icon">
+                                <i class="fas fa-crown" style="color: var(--vip3);"></i>
+                            </div>
+                            <div class="vip-name">VIP 3</div>
+                            <div class="vip-price">Accès Premium Total</div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="vip3Checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 30px; text-align: center;">
+                        <button type="button" class="btn-success" onclick="saveVipChanges()">
+                            <i class="fas fa-save"></i> Enregistrer les modifications
+                        </button>
+                        <button type="button" class="btn-warning" onclick="resetVipChanges()" style="margin-left: 10px;">
+                            <i class="fas fa-undo"></i> Réinitialiser
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="vipLoading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Recherche de l'utilisateur...</p>
+            </div>
+
+            <div id="vipError" class="empty-state" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Utilisateur non trouvé</h3>
+                <p>L'adresse email que vous avez saisie ne correspond à aucun utilisateur.</p>
+            </div>
+        </div>
+
+        <!-- Credits Tab -->
+        <div id="credits" class="tab-content">
+            <div class="credit-summary">
+                <div class="credit-info">
+                    <h3><i class="fas fa-wallet"></i> Gestion des Crédits</h3>
+                    <p>Rechargez ou retirez des crédits des utilisateurs</p>
+                </div>
+                <div class="credit-amount" id="currentUserCredit">0</div>
+            </div>
+
+            <div class="credit-controls">
+                <div class="control-form">
+                    <h3><i class="fas fa-search"></i> Rechercher Utilisateur</h3>
+                    <form id="creditForm">
+                        <div class="form-group">
+                            <label for="userId">ID Utilisateur</label>
+                            <input type="text" id="userId" required placeholder="Entrez l'ID utilisateur">
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-search"></i> Rechercher
+                        </button>
+                    </form>
+                </div>
+
+                <div class="control-form">
+                    <h3><i class="fas fa-coins"></i> Ajouter des Crédits</h3>
+                    <form id="rechargeForm">
+                        <div class="form-group">
+                            <label for="rechargeAmount">Montant à ajouter</label>
+                            <input type="number" id="rechargeAmount" required min="1" placeholder="Montant" value="100">
+                        </div>
+                        <button type="submit" class="btn-success">
+                            <i class="fas fa-plus-circle"></i> Ajouter
+                        </button>
+                    </form>
+                </div>
+
+                <div class="control-form">
+                    <h3><i class="fas fa-minus-circle"></i> Retirer des Crédits</h3>
+                    <form id="withdrawForm">
+                        <div class="form-group">
+                            <label for="withdrawAmount">Montant à retirer</label>
+                            <input type="number" id="withdrawAmount" required min="1" placeholder="Montant" value="50">
+                        </div>
+                        <button type="submit" class="btn-warning">
+                            <i class="fas fa-minus-circle"></i> Retirer
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="creditInfo" style="display: none;">
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Informations Utilisateur</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>ID Utilisateur</label>
+                            <input type="text" value="" id="infoUserId" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Crédits Actuels</label>
+                            <input type="text" value="" id="infoCredits" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Dépenses Totales</label>
+                            <input type="text" value="" id="infoSpent" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="creditLoading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Recherche de l'utilisateur...</p>
+            </div>
+
+            <div id="creditError" class="empty-state" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Utilisateur non trouvé</h3>
+                <p>L'ID que vous avez saisi ne correspond à aucun utilisateur.</p>
+            </div>
+        </div>
+
+        <!-- Spent Tab -->
+        <div id="spent" class="tab-content">
+            <div class="credit-summary">
+                <div class="credit-info">
+                    <h3><i class="fas fa-chart-line"></i> Suivi des Dépenses</h3>
+                    <p>Gestion des crédits dépensés sur les paris sportifs</p>
+                </div>
+                <div class="spent-amount" id="totalSpent">0</div>
+            </div>
+
+            <div class="form-section">
+                <h3><i class="fas fa-search"></i> Consulter les Dépenses</h3>
+                <form id="spentForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="spentUserId">ID Utilisateur</label>
+                            <input type="text" id="spentUserId" required placeholder="Entrez l'ID utilisateur">
+                        </div>
+                        <div class="form-group">
+                            <label for="spentAmount">Montant dépensé</label>
+                            <input type="number" id="spentAmount" required min="0" placeholder="Montant" value="0">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Mettre à Jour
+                    </button>
+                </form>
+            </div>
+
+            <div id="spentInfo" style="display: none;">
+                <div class="form-section">
+                    <h3><i class="fas fa-history"></i> Historique des Dépenses</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>ID Utilisateur</label>
+                            <input type="text" value="" id="spentInfoUserId" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Dépenses Totales</label>
+                            <input type="text" value="" id="spentInfoTotal" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Dernière Mise à Jour</label>
+                            <input type="text" value="" id="spentInfoUpdated" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="spentLoading" class="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Chargement des données...</p>
+            </div>
+
+            <div id="spentError" class="empty-state" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Aucune donnée</h3>
+                <p>Aucune dépense enregistrée pour cet utilisateur.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <h3 id="modalTitle">Confirmer la suppression</h3>
+            <p id="modalMessage">Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.</p>
+            <div class="modal-actions">
+                <button type="button" onclick="closeDeleteModal()" class="btn-light">
+                    <i class="fas fa-times"></i> Annuler
+                </button>
+                <button type="button" onclick="confirmDelete()" class="btn-danger">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i> Opération réussie!
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+
+    <script>
+        // Configuration Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0NRSzHWFd6e2KS8u2it0dP0Y44Dzg4n4",
+            authDomain: "latrou.firebaseapp.com",
+            projectId: "latrou",
+            storageBucket: "latrou.appspot.com",
+            messagingSenderId: "320805997315",
+            appId: "1:320805997315:web:afc4e6b4f1b4c7892f8aff"
+        };
+
+        // Initialiser Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // Mot de passe administrateur
+        const ADMIN_PASSWORD = "@dmin7024476";
+
+        // Références DOM
+        const loginContainer = document.getElementById('loginContainer');
+        const mainContainer = document.getElementById('mainContainer');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginError = document.getElementById('loginError');
+        
+        // Formulaires
+        const postForm = document.getElementById('postForm');
+        const secretForm = document.getElementById('secretForm');
+        const sportForm = document.getElementById('sportForm');
+        const creditForm = document.getElementById('creditForm');
+        const rechargeForm = document.getElementById('rechargeForm');
+        const withdrawForm = document.getElementById('withdrawForm');
+        const spentForm = document.getElementById('spentForm');
+        const vipSearchForm = document.getElementById('vipSearchForm');
+        
+        // Inputs
+        const postIdInput = document.getElementById('postId');
+        const secretIdInput = document.getElementById('secretId');
+        const sportIdInput = document.getElementById('sportId');
+        
+        // Autres éléments
+        const notification = document.getElementById('notification');
+        const deleteModal = document.getElementById('deleteModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        
+        // Variables globales
+        let itemToDelete = null;
+        let deleteType = null;
+        let currentUserDoc = null;
+        let currentUserCredits = 0;
+        let currentUserSpent = 0;
+        let currentVipUserDoc = null;
+        let currentVipUserData = null;
+
+        // Statistiques globales
+        let totalPosts = 0;
+        let totalSecrets = 0;
+        let totalSports = 0;
+        let totalCredits = 0;
+
+        // Vérifier la connexion
+        if (localStorage.getItem('adminLoggedIn') === 'true') {
+            showMainInterface();
+        }
+
+        // Fonctions d'authentification
+        function checkPassword() {
+            const password = passwordInput.value;
+            
+            if (password === ADMIN_PASSWORD) {
+                localStorage.setItem('adminLoggedIn', 'true');
+                showMainInterface();
+                loginError.style.display = 'none';
+                passwordInput.value = '';
+            } else {
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        function showMainInterface() {
+            loginContainer.style.display = 'none';
+            mainContainer.style.display = 'block';
+            showTab('dashboard');
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            mainContainer.style.display = 'none';
+            loginContainer.style.display = 'block';
+            passwordInput.focus();
+        }
+
+        // Gestion des onglets
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            document.querySelector(`.tab-button[onclick="showTab('${tabName}')"]`).classList.add('active');
+            
+            // Réinitialiser les formulaires spécifiques
+            if (tabName !== 'credits') {
+                resetCreditSearch();
+            }
+            if (tabName !== 'spent') {
+                resetSpentSearch();
+            }
+            if (tabName !== 'subscriptions') {
+                resetVipSearch();
+            }
+        }
+
+        // Aperçu d'images
+        document.getElementById('image')?.addEventListener('input', function() {
+            const preview = document.getElementById('preview');
+            if (this.value) {
+                preview.src = this.value;
+                document.getElementById('imagePreview').style.display = 'block';
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+        });
+
+        document.getElementById('secretImage')?.addEventListener('input', function() {
+            const preview = document.getElementById('secretPreview');
+            if (this.value) {
+                preview.src = this.value;
+                document.getElementById('secretImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('secretImagePreview').style.display = 'none';
+            }
+        });
+
+        document.getElementById('sportImage')?.addEventListener('input', function() {
+            const preview = document.getElementById('sportPreview');
+            if (this.value) {
+                preview.src = this.value;
+                document.getElementById('sportImagePreview').style.display = 'block';
+            } else {
+                document.getElementById('sportImagePreview').style.display = 'none';
+            }
+        });
+
+        // Gestion des formulaires
+        postForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = postIdInput.value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const image = document.getElementById('image').value;
+
+            try {
+                if (id) {
+                    await db.collection('posts').doc(id).update({
+                        titre: title,
+                        description: description,
+                        image: image,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Publication mise à jour!', 'success');
+                } else {
+                    await db.collection('posts').add({
+                        titre: title,
+                        description: description,
+                        image: image,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Publication créée!', 'success');
+                }
+                
+                resetPostForm();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        });
+
+        secretForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = secretIdInput.value;
+            const title = document.getElementById('secretTitle').value;
+            const description = document.getElementById('secretDescription').value;
+            const image = document.getElementById('secretImage').value;
+            const credits = parseInt(document.getElementById('requiredCredits').value);
+            const code = parseInt(document.getElementById('unlockCode').value);
+
+            try {
+                if (id) {
+                    await db.collection('secrets').doc(id).update({
+                        titre: title,
+                        description: description,
+                        image: image,
+                        required_credits: credits,
+                        unlock_code: code,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Secret mis à jour!', 'success');
+                } else {
+                    await db.collection('secrets').add({
+                        titre: title,
+                        description: description,
+                        image: image,
+                        required_credits: credits,
+                        unlock_code: code,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Secret créé!', 'success');
+                }
+                
+                resetSecretForm();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        });
+
+        sportForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const id = sportIdInput.value;
+            const title = document.getElementById('sportTitle').value;
+            const description = document.getElementById('sportDescription').value;
+            const etat = document.getElementById('sportEtat').value === 'true';
+            const credits = parseInt(document.getElementById('sportRequiredCredits').value);
+            const code = parseInt(document.getElementById('sportUnlockCode').value);
+            const image = document.getElementById('sportImage').value;
+
+            try {
+                if (id) {
+                    await db.collection('paris_sportifs').doc(id).update({
+                        titre: title,
+                        description: description,
+                        etat: etat,
+                        required_credits: credits,
+                        unlock_code: code,
+                        image: image,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Paris mis à jour!', 'success');
+                } else {
+                    await db.collection('paris_sportifs').add({
+                        titre: title,
+                        description: description,
+                        etat: etat,
+                        required_credits: credits,
+                        unlock_code: code,
+                        image: image,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    showNotification('Paris créé!', 'success');
+                }
+                
+                resetSportForm();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        });
+
+        // Gestion des abonnements VIP
+        vipSearchForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('vipEmail').value.trim();
+            if (!email) return;
+            
+            try {
+                showVipLoading(true);
+                
+                // Rechercher l'utilisateur par email dans Firebase Auth
+                const userQuery = await db.collection('users').where('email', '==', email).limit(1).get();
+                
+                if (!userQuery.empty) {
+                    const userDoc = userQuery.docs[0];
+                    currentVipUserDoc = userDoc.ref;
+                    currentVipUserData = userDoc.data();
+                    
+                    // Afficher les informations
+                    document.getElementById('vipUserId').textContent = userDoc.id;
+                    document.getElementById('vipUserEmail').textContent = currentVipUserData.email || email;
+                    document.getElementById('vipUsername').textContent = currentVipUserData.username || currentVipUserData.displayName || 'Non défini';
+                    
+                    // Configurer les checkboxes VIP
+                    document.getElementById('vip1Checkbox').checked = currentVipUserData.vip1 === true;
+                    document.getElementById('vip2Checkbox').checked = currentVipUserData.vip2 === true;
+                    document.getElementById('vip3Checkbox').checked = currentVipUserData.vip3 === true;
+                    
+                    // Mettre à jour l'apparence des toggles
+                    updateVipTogglesAppearance();
+                    
+                    document.getElementById('vipUserInfo').style.display = 'block';
+                    document.getElementById('vipError').style.display = 'none';
+                    showNotification('Utilisateur trouvé!', 'success');
+                } else {
+                    document.getElementById('vipUserInfo').style.display = 'none';
+                    document.getElementById('vipError').style.display = 'block';
+                    showNotification('Utilisateur non trouvé', 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+                document.getElementById('vipUserInfo').style.display = 'none';
+                document.getElementById('vipError').style.display = 'block';
+            } finally {
+                showVipLoading(false);
+            }
+        });
+
+        function updateVipTogglesAppearance() {
+            const vip1Checked = document.getElementById('vip1Checkbox').checked;
+            const vip2Checked = document.getElementById('vip2Checkbox').checked;
+            const vip3Checked = document.getElementById('vip3Checkbox').checked;
+            
+            const vip1Toggle = document.getElementById('vip1Toggle');
+            const vip2Toggle = document.getElementById('vip2Toggle');
+            const vip3Toggle = document.getElementById('vip3Toggle');
+            
+            if (vip1Checked) vip1Toggle.classList.add('active');
+            else vip1Toggle.classList.remove('active');
+            
+            if (vip2Checked) vip2Toggle.classList.add('active');
+            else vip2Toggle.classList.remove('active');
+            
+            if (vip3Checked) vip3Toggle.classList.add('active');
+            else vip3Toggle.classList.remove('active');
+        }
+
+        // Écouter les changements des checkboxes VIP
+        document.getElementById('vip1Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+        document.getElementById('vip2Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+        document.getElementById('vip3Checkbox')?.addEventListener('change', updateVipTogglesAppearance);
+
+        async function saveVipChanges() {
+            if (!currentVipUserDoc) {
+                showNotification('Recherchez d\'abord un utilisateur', 'warning');
+                return;
+            }
+            
+            const vip1 = document.getElementById('vip1Checkbox').checked;
+            const vip2 = document.getElementById('vip2Checkbox').checked;
+            const vip3 = document.getElementById('vip3Checkbox').checked;
+            
+            try {
+                await currentVipUserDoc.update({
+                    vip1: vip1,
+                    vip2: vip2,
+                    vip3: vip3,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                showNotification('Niveaux VIP mis à jour avec succès!', 'success');
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        }
+
+        function resetVipChanges() {
+            if (!currentVipUserData) {
+                showNotification('Aucun utilisateur sélectionné', 'warning');
+                return;
+            }
+            
+            document.getElementById('vip1Checkbox').checked = currentVipUserData.vip1 === true;
+            document.getElementById('vip2Checkbox').checked = currentVipUserData.vip2 === true;
+            document.getElementById('vip3Checkbox').checked = currentVipUserData.vip3 === true;
+            updateVipTogglesAppearance();
+            showNotification('Réinitialisé aux valeurs enregistrées', 'success');
+        }
+
+        function resetVipSearch() {
+            document.getElementById('vipUserInfo').style.display = 'none';
+            document.getElementById('vipError').style.display = 'none';
+            document.getElementById('vipLoading').style.display = 'none';
+            document.getElementById('vipEmail').value = '';
+            currentVipUserDoc = null;
+            currentVipUserData = null;
+        }
+
+        function showVipLoading(show) {
+            document.getElementById('vipLoading').style.display = show ? 'block' : 'none';
+        }
+
+        // Gestion des crédits
+        creditForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('userId').value.trim();
+            if (!userId) return;
+            
+            try {
+                showCreditLoading(true);
+                const docRef = db.collection('sport_credit').doc(userId);
+                const doc = await docRef.get();
+                
+                if (doc.exists) {
+                    currentUserDoc = docRef;
+                    const data = doc.data();
+                    currentUserCredits = data.credits || 0;
+                    currentUserSpent = data.spent || 0;
+                    
+                    // Mettre à jour l'affichage
+                    document.getElementById('currentUserCredit').textContent = currentUserCredits;
+                    document.getElementById('infoUserId').value = userId;
+                    document.getElementById('infoCredits').value = currentUserCredits;
+                    document.getElementById('infoSpent').value = currentUserSpent;
+                    
+                    document.getElementById('creditInfo').style.display = 'block';
+                    document.getElementById('creditError').style.display = 'none';
+                    showNotification('Utilisateur trouvé!', 'success');
+                } else {
+                    currentUserDoc = null;
+                    document.getElementById('creditInfo').style.display = 'none';
+                    document.getElementById('creditError').style.display = 'block';
+                    showNotification('Utilisateur non trouvé', 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            } finally {
+                showCreditLoading(false);
+            }
+        });
+
+        rechargeForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUserDoc) {
+                showNotification('Recherchez d\'abord un utilisateur', 'warning');
+                return;
+            }
+            
+            const amount = parseInt(document.getElementById('rechargeAmount').value);
+            if (isNaN(amount) || amount <= 0) return;
+            
+            try {
+                const newCredits = currentUserCredits + amount;
+                await currentUserDoc.update({
+                    credits: newCredits,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                currentUserCredits = newCredits;
+                document.getElementById('infoCredits').value = newCredits;
+                document.getElementById('currentUserCredit').textContent = newCredits;
+                showNotification(`${amount} crédits ajoutés! Nouveau solde: ${newCredits}`, 'success');
+                updateDashboardStats();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        });
+
+        withdrawForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUserDoc) {
+                showNotification('Recherchez d\'abord un utilisateur', 'warning');
+                return;
+            }
+            
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            if (isNaN(amount) || amount <= 0) return;
+            
+            if (amount > currentUserCredits) {
+                showNotification('Solde insuffisant!', 'error');
+                return;
+            }
+            
+            try {
+                const newCredits = currentUserCredits - amount;
+                await currentUserDoc.update({
+                    credits: newCredits,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                currentUserCredits = newCredits;
+                document.getElementById('infoCredits').value = newCredits;
+                document.getElementById('currentUserCredit').textContent = newCredits;
+                showNotification(`${amount} crédits retirés! Nouveau solde: ${newCredits}`, 'success');
+                updateDashboardStats();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            }
+        });
+
+        // Gestion des dépenses
+        spentForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const userId = document.getElementById('spentUserId').value.trim();
+            const spentAmount = parseInt(document.getElementById('spentAmount').value);
+            if (!userId || isNaN(spentAmount)) return;
+            
+            try {
+                showSpentLoading(true);
+                const docRef = db.collection('sport_credit').doc(userId);
+                const doc = await docRef.get();
+                
+                if (doc.exists) {
+                    // Mettre à jour les dépenses
+                    await docRef.update({
+                        spent: spentAmount,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Afficher les informations
+                    document.getElementById('spentInfoUserId').value = userId;
+                    document.getElementById('spentInfoTotal').value = spentAmount;
+                    document.getElementById('spentInfoUpdated').value = new Date().toLocaleString();
+                    
+                    document.getElementById('spentInfo').style.display = 'block';
+                    document.getElementById('spentError').style.display = 'none';
+                    
+                    // Mettre à jour le total affiché
+                    const totalSpent = await calculateTotalSpent();
+                    document.getElementById('totalSpent').textContent = totalSpent;
+                    
+                    showNotification('Dépenses mises à jour!', 'success');
+                } else {
+                    document.getElementById('spentInfo').style.display = 'none';
+                    document.getElementById('spentError').style.display = 'block';
+                    showNotification('Utilisateur non trouvé', 'error');
+                }
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+            } finally {
+                showSpentLoading(false);
+            }
+        });
+
+        // Fonctions d'édition
+        function editPost(post) {
+            postIdInput.value = post.id;
+            document.getElementById('title').value = post.titre;
+            document.getElementById('description').value = post.description;
+            document.getElementById('image').value = post.image || '';
+            
+            const preview = document.getElementById('preview');
+            if (post.image) {
+                preview.src = post.image;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+            
+            document.getElementById('postFormTitle').innerHTML = '<i class="fas fa-edit"></i> Modifier la Publication';
+            document.getElementById('postSubmitBtn').innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+            document.getElementById('postCancelBtn').style.display = 'flex';
+            showTab('posts');
+        }
+
+        function editSecret(secret) {
+            secretIdInput.value = secret.id;
+            document.getElementById('secretTitle').value = secret.titre;
+            document.getElementById('secretDescription').value = secret.description;
+            document.getElementById('secretImage').value = secret.image || '';
+            document.getElementById('requiredCredits').value = secret.required_credits || 0;
+            document.getElementById('unlockCode').value = secret.unlock_code || 1234;
+            
+            const preview = document.getElementById('secretPreview');
+            if (secret.image) {
+                preview.src = secret.image;
+                document.getElementById('secretImagePreview').style.display = 'block';
+            }
+            
+            document.getElementById('secretFormTitle').innerHTML = '<i class="fas fa-edit"></i> Modifier le Secret';
+            document.getElementById('secretSubmitBtn').innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+            document.getElementById('secretCancelBtn').style.display = 'flex';
+            showTab('secrets');
+        }
+
+        function editSport(sport) {
+            sportIdInput.value = sport.id;
+            document.getElementById('sportTitle').value = sport.titre;
+            document.getElementById('sportDescription').value = sport.description;
+            document.getElementById('sportEtat').value = sport.etat ? 'true' : 'false';
+            document.getElementById('sportRequiredCredits').value = sport.required_credits || 0;
+            document.getElementById('sportUnlockCode').value = sport.unlock_code || 1234;
+            document.getElementById('sportImage').value = sport.image || '';
+            
+            const preview = document.getElementById('sportPreview');
+            if (sport.image) {
+                preview.src = sport.image;
+                document.getElementById('sportImagePreview').style.display = 'block';
+            }
+            
+            document.getElementById('sportFormTitle').innerHTML = '<i class="fas fa-edit"></i> Modifier le Paris';
+            document.getElementById('sportSubmitBtn').innerHTML = '<i class="fas fa-save"></i> Mettre à jour';
+            document.getElementById('sportCancelBtn').style.display = 'flex';
+            showTab('sports');
+        }
+
+        // Fonctions de suppression
+        function deletePost(id) {
+            itemToDelete = id;
+            deleteType = 'post';
+            modalTitle.textContent = 'Supprimer la Publication';
+            modalMessage.textContent = 'Cette action supprimera définitivement la publication.';
+            deleteModal.style.display = 'flex';
+        }
+
+        function deleteSecret(id) {
+            itemToDelete = id;
+            deleteType = 'secret';
+            modalTitle.textContent = 'Supprimer le Secret';
+            modalMessage.textContent = 'Cette action supprimera définitivement le secret.';
+            deleteModal.style.display = 'flex';
+        }
+
+        function deleteSport(id) {
+            itemToDelete = id;
+            deleteType = 'sport';
+            modalTitle.textContent = 'Supprimer le Paris Sportif';
+            modalMessage.textContent = 'Cette action supprimera définitivement le pari sportif.';
+            deleteModal.style.display = 'flex';
+        }
+
+        async function confirmDelete() {
+            try {
+                if (deleteType === 'post') {
+                    await db.collection('posts').doc(itemToDelete).delete();
+                    showNotification('Publication supprimée!', 'success');
+                } else if (deleteType === 'secret') {
+                    await db.collection('secrets').doc(itemToDelete).delete();
+                    showNotification('Secret supprimé!', 'success');
+                } else if (deleteType === 'sport') {
+                    await db.collection('paris_sportifs').doc(itemToDelete).delete();
+                    showNotification('Paris supprimé!', 'success');
+                }
+                closeDeleteModal();
+            } catch (error) {
+                showNotification('Erreur: ' + error.message, 'error');
+                closeDeleteModal();
+            }
+        }
+
+        function closeDeleteModal() {
+            deleteModal.style.display = 'none';
+            itemToDelete = null;
+            deleteType = null;
+        }
+
+        // Réinitialisation des formulaires
+        function resetPostForm() {
+            postForm.reset();
+            postIdInput.value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('postFormTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nouvelle Publication';
+            document.getElementById('postSubmitBtn').innerHTML = '<i class="fas fa-paper-plane"></i> Publier';
+            document.getElementById('postCancelBtn').style.display = 'none';
+        }
+
+        function resetSecretForm() {
+            secretForm.reset();
+            secretIdInput.value = '';
+            document.getElementById('requiredCredits').value = 0;
+            document.getElementById('unlockCode').value = 1234;
+            document.getElementById('secretImagePreview').style.display = 'none';
+            document.getElementById('secretFormTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nouveau Secret';
+            document.getElementById('secretSubmitBtn').innerHTML = '<i class="fas fa-lock"></i> Créer Secret';
+            document.getElementById('secretCancelBtn').style.display = 'none';
+        }
+
+        function resetSportForm() {
+            sportForm.reset();
+            sportIdInput.value = '';
+            document.getElementById('sportRequiredCredits').value = 0;
+            document.getElementById('sportUnlockCode').value = 1234;
+            document.getElementById('sportEtat').value = 'true';
+            document.getElementById('sportImagePreview').style.display = 'none';
+            document.getElementById('sportFormTitle').innerHTML = '<i class="fas fa-plus-circle"></i> Nouveau Paris Sportif';
+            document.getElementById('sportSubmitBtn').innerHTML = '<i class="fas fa-futbol"></i> Publier Paris';
+            document.getElementById('sportCancelBtn').style.display = 'none';
+        }
+
+        function resetCreditSearch() {
+            document.getElementById('creditInfo').style.display = 'none';
+            document.getElementById('creditError').style.display = 'none';
+            document.getElementById('creditLoading').style.display = 'none';
+            currentUserDoc = null;
+            currentUserCredits = 0;
+        }
+
+        function resetSpentSearch() {
+            document.getElementById('spentInfo').style.display = 'none';
+            document.getElementById('spentError').style.display = 'none';
+            document.getElementById('spentLoading').style.display = 'none';
+        }
+
+        function showCreditLoading(show) {
+            document.getElementById('creditLoading').style.display = show ? 'block' : 'none';
+        }
+
+        function showSpentLoading(show) {
+            document.getElementById('spentLoading').style.display = show ? 'block' : 'none';
+        }
+
+        // Notifications
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'exclamation-triangle'}"></i> ${message}`;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Statistiques et mise à jour du tableau de bord
+        async function calculateTotalSpent() {
+            try {
+                const snapshot = await db.collection('sport_credit').get();
+                let total = 0;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    total += data.spent || 0;
+                });
+                return total;
+            } catch (error) {
+                console.error('Erreur calcul dépenses:', error);
+                return 0;
+            }
+        }
+
+        async function calculateTotalCredits() {
+            try {
+                const snapshot = await db.collection('sport_credit').get();
+                let total = 0;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    total += data.credits || 0;
+                });
+                return total;
+            } catch (error) {
+                console.error('Erreur calcul crédits:', error);
+                return 0;
+            }
+        }
+
+        async function updateDashboardStats() {
+            try {
+                // Compter les publications
+                const postsSnapshot = await db.collection('posts').get();
+                totalPosts = postsSnapshot.size;
+                document.getElementById('dashboardPosts').textContent = totalPosts;
+                document.getElementById('statsPosts').textContent = totalPosts;
+                document.getElementById('postsCount').textContent = `${totalPosts} publication${totalPosts > 1 ? 's' : ''}`;
+
+                // Compter les secrets
+                const secretsSnapshot = await db.collection('secrets').get();
+                totalSecrets = secretsSnapshot.size;
+                document.getElementById('dashboardSecrets').textContent = totalSecrets;
+                document.getElementById('statsSecrets').textContent = totalSecrets;
+                document.getElementById('secretsCount').textContent = `${totalSecrets} secret${totalSecrets > 1 ? 's' : ''}`;
+
+                // Compter les paris sportifs actifs
+                const sportsSnapshot = await db.collection('paris_sportifs').where('etat', '==', true).get();
+                totalSports = sportsSnapshot.size;
+                document.getElementById('dashboardSports').textContent = totalSports;
+                document.getElementById('statsSports').textContent = totalSports;
+                document.getElementById('sportsCount').textContent = `${sportsSnapshot.size} paris sportif${sportsSnapshot.size > 1 ? 's' : ''}`;
+
+                // Calculer le total des crédits
+                totalCredits = await calculateTotalCredits();
+                document.getElementById('dashboardCredits').textContent = totalCredits;
+
+                // Calculer le total des dépenses
+                const totalSpent = await calculateTotalSpent();
+                document.getElementById('totalSpent').textContent = totalSpent;
+
+                // Compter les VIP actifs
+                const vipUsersSnapshot = await db.collection('users').where('vip1', '==', true).get();
+                document.getElementById('vipStats').innerHTML = `${vipUsersSnapshot.size} VIP Actifs`;
+
+                // Mettre à jour l'activité récente
+                updateRecentActivity();
+            } catch (error) {
+                console.error('Erreur mise à jour stats:', error);
+            }
+        }
+
+        async function updateRecentActivity() {
+            try {
+                const activityContainer = document.getElementById('activityContainer');
+                const postsSnapshot = await db.collection('posts').orderBy('createdAt', 'desc').limit(4).get();
+                const posts = [];
+                postsSnapshot.forEach(doc => {
+                    posts.push({ id: doc.id, ...doc.data(), type: 'post' });
+                });
+
+                const secretsSnapshot = await db.collection('secrets').orderBy('createdAt', 'desc').limit(2).get();
+                const secrets = [];
+                secretsSnapshot.forEach(doc => {
+                    secrets.push({ id: doc.id, ...doc.data(), type: 'secret' });
+                });
+
+                const sportsSnapshot = await db.collection('paris_sportifs').orderBy('createdAt', 'desc').limit(2).get();
+                const sports = [];
+                sportsSnapshot.forEach(doc => {
+                    sports.push({ id: doc.id, ...doc.data(), type: 'sport' });
+                });
+
+                const allActivity = [...posts, ...secrets, ...sports]
+                    .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0))
+                    .slice(0, 8);
+
+                if (allActivity.length === 0) {
+                    activityContainer.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-history"></i>
+                            <h3>Aucune activité</h3>
+                            <p>Créez du contenu pour voir l'activité ici.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                activityContainer.innerHTML = allActivity.map(item => `
+                    <div class="item-card">
+                        <div class="item-content">
+                            <div class="item-header">
+                                <div class="item-title">
+                                    ${item.titre}
+                                    <span class="item-status ${item.type === 'post' ? 'status-active' : item.type === 'secret' ? 'status-inactive' : 'status-active'}">
+                                        ${item.type === 'post' ? 'PUBLICATION' : item.type === 'secret' ? 'SECRET' : 'PARIS'}
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="item-description">${item.description ? item.description.substring(0, 100) + '...' : ''}</p>
+                            <div class="item-id">
+                                Créé le: ${item.createdAt ? new Date(item.createdAt.seconds * 1000).toLocaleDateString('fr-FR') : 'N/A'}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Erreur activité:', error);
+            }
+        }
+
+        async function refreshAll() {
+            showNotification('Actualisation en cours...', 'warning');
+            await updateDashboardStats();
+            showNotification('Tableau de bord actualisé!', 'success');
+        }
+
+        // Écouteurs en temps réel
+        db.collection('posts').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+            const posts = [];
+            snapshot.forEach((doc) => {
+                posts.push({ id: doc.id, ...doc.data() });
+            });
+            renderPosts(posts);
+            updateDashboardStats();
+        });
+
+        db.collection('secrets').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+            const secrets = [];
+            snapshot.forEach((doc) => {
+                secrets.push({ id: doc.id, ...doc.data() });
+            });
+            renderSecrets(secrets);
+            updateDashboardStats();
+        });
+
+        db.collection('paris_sportifs').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+            const sports = [];
+            snapshot.forEach((doc) => {
+                sports.push({ id: doc.id, ...doc.data() });
+            });
+            renderSports(sports);
+            updateDashboardStats();
+        });
+
+        db.collection('sport_credit').onSnapshot(() => {
+            updateDashboardStats();
+        });
+
+        db.collection('users').onSnapshot(() => {
+            updateDashboardStats();
+        });
+
+        // Rendu des éléments
+        function renderPosts(posts) {
+            const container = document.getElementById('adminPostsContainer');
+            if (!container) return;
+
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>Aucune publication</h3>
+                        <p>Commencez par créer votre première publication.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = posts.map(post => `
+                <div class="item-card ${postIdInput.value === post.id ? 'editing' : ''}">
+                    ${post.image ? `<img src="${post.image}" alt="${post.titre}" class="item-image">` : 
+                      `<div class="item-image" style="background:#eee;display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-image" style="font-size:3rem;color:#ccc;"></i>
+                       </div>`}
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div class="item-title">${post.titre}</div>
+                        </div>
+                        <p class="item-description">${post.description}</p>
+                        <div class="item-id">ID: ${post.id}</div>
+                        <div class="item-actions">
+                            <button type="button" onclick="editPost(${JSON.stringify(post).replace(/"/g, '&quot;')})" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" onclick="deletePost('${post.id}')" class="btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSecrets(secrets) {
+            const container = document.getElementById('secretsContainer');
+            if (!container) return;
+
+            if (secrets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-lock"></i>
+                        <h3>Aucun secret</h3>
+                        <p>Créez votre premier secret pour commencer.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = secrets.map(secret => `
+                <div class="item-card ${secretIdInput.value === secret.id ? 'editing' : ''}">
+                    ${secret.image ? `<img src="${secret.image}" alt="${secret.titre}" class="item-image">` : 
+                      `<div class="item-image" style="background:var(--secondary);display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-lock" style="font-size:3rem;color:white;"></i>
+                       </div>`}
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div class="item-title">${secret.titre}</div>
+                        </div>
+                        <p class="item-description">${secret.description}</p>
+                        <div class="item-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Crédits requis:</span>
+                                <span class="detail-value">${secret.required_credits}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Code:</span>
+                                <span class="detail-value">${secret.unlock_code}</span>
+                            </div>
+                        </div>
+                        <div class="item-id">ID: ${secret.id}</div>
+                        <div class="item-actions">
+                            <button type="button" onclick="editSecret(${JSON.stringify(secret).replace(/"/g, '&quot;')})" class="btn-secondary">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" onclick="deleteSecret('${secret.id}')" class="btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSports(sports) {
+            const container = document.getElementById('sportsContainer');
+            if (!container) return;
+
+            if (sports.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-futbol"></i>
+                        <h3>Aucun pari sportif</h3>
+                        <p>Créez votre premier pari sportif.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = sports.map(sport => `
+                <div class="item-card ${sportIdInput.value === sport.id ? 'editing' : ''}">
+                    ${sport.image ? `<img src="${sport.image}" alt="${sport.titre}" class="item-image">` : 
+                      `<div class="item-image" style="background:var(--info);display:flex;align-items:center;justify-content:center;">
+                         <i class="fas fa-futbol" style="font-size:3rem;color:white;"></i>
+                       </div>`}
+                    <div class="item-content">
+                        <div class="item-header">
+                            <div class="item-title">${sport.titre}
+                                <span class="item-status ${sport.etat ? 'status-active' : 'status-inactive'}">
+                                    ${sport.etat ? 'ACTIF' : 'INACTIF'}
+                                </span>
+                            </div>
+                        </div>
+                        <p class="item-description">${sport.description}</p>
+                        <div class="item-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Crédits requis:</span>
+                                <span class="detail-value">${sport.required_credits}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Code:</span>
+                                <span class="detail-value">${sport.unlock_code}</span>
+                            </div>
+                        </div>
+                        <div class="item-id">ID: ${sport.id}</div>
+                        <div class="item-actions">
+                            <button type="button" onclick="editSport(${JSON.stringify(sport).replace(/"/g, '&quot;')})" class="btn-info">
+                                <i class="fas fa-edit"></i> Modifier
+                            </button>
+                            <button type="button" onclick="deleteSport('${sport.id}')" class="btn-danger">
+                                <i class="fas fa-trash"></i> Supprimer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialisation
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        // Fermer modal en cliquant à l'extérieur
+        deleteModal.addEventListener('click', (e) => {
+            if (e.target === deleteModal) closeDeleteModal();
+        });
+
+        // Cacher aperçus images au démarrage
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('secretImagePreview').style.display = 'none';
+        document.getElementById('sportImagePreview').style.display = 'none';
+    </script>
+</body>
+</html>
