@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Djinn Pronostics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0D001A; color: white; font-family: 'Segoe UI', sans-serif; }
+        .input-field { background-color: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: white; }
+        .input-field:focus { border-color: #FFD700; outline: none; box-shadow: 0 0 0 2px rgba(255,215,0,0.3); }
+        .btn-gold { background-color: #FFD700; color: black; font-weight: bold; transition: 0.2s; }
+        .btn-gold:hover { background-color: #e6c200; transform: translateY(-2px); }
+        .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; width: 100%; }
+        .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+        .file-input-btn { background-color: #4B0082; color: white; padding: 8px; border-radius: 8px; text-align: center; font-size: 12px; border: 1px dashed #FFD700; cursor: pointer; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-6">
+
+    <!-- ÉCRAN DE CONNEXION -->
+    <div id="login-screen" class="max-w-md mx-auto mt-20 p-8 rounded-2xl border border-yellow-600 bg-purple-900/30 backdrop-blur-md">
+        <h1 class="text-3xl font-bold text-center text-yellow-500 mb-6">🔐 Connexion Admin</h1>
+        <button id="google-login-btn" class="w-full flex items-center justify-center gap-3 bg-white text-gray-900 font-bold py-3 px-4 rounded-xl hover:bg-gray-100 transition">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-6 h-6">
+            Se connecter avec Google
+        </button>
+        <p id="login-error" class="text-red-500 text-center mt-4 text-sm hidden"></p>
+    </div>
+
+    <!-- ÉCRAN D'ADMINISTRATION -->
+    <div id="admin-screen" class="max-w-6xl mx-auto hidden">
+        <div class="flex justify-between items-center mb-6 border-b border-gray-700 pb-4">
+            <h1 class="text-2xl font-bold text-yellow-500">⚙️ Tableau de Bord</h1>
+            <div class="flex gap-4 items-center">
+                <button id="clear-memory-btn" class="text-orange-400 hover:text-orange-300 text-xs">Vider la mémoire</button>
+                <button id="logout-btn" class="text-red-400 hover:text-red-300 text-sm font-semibold">Déconnexion</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- COLONNE GAUCHE : FORMULAIRE -->
+            <div class="lg:col-span-2 bg-purple-900/20 border border-purple-700 rounded-2xl p-5 h-fit">
+                <h2 id="form-title" class="text-lg font-bold text-white mb-4">📝 Publier un match</h2>
+                <input type="hidden" id="edit-id" value="">
+                <input type="hidden" id="edit-type" value="">
+                
+                <form id="match-form" class="space-y-3" autocomplete="off">
+                    <!-- Équipes avec Auto-complétion -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Équipe Domicile</label>
+                            <input type="text" id="equipeDomicile" list="liste-equipes" class="input-field w-full p-2 rounded-lg" required oninput="verifierEquipe('dom')">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Équipe Extérieur</label>
+                            <input type="text" id="equipeExterieur" list="liste-equipes" class="input-field w-full p-2 rounded-lg" required oninput="verifierEquipe('ext')">
+                        </div>
+                    </div>
+                    <datalist id="liste-equipes"></datalist>
+
+                    <!-- Compétition + Date avec Auto-complétion -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Compétition</label>
+                            <input type="text" id="competition" list="liste-competitions" class="input-field w-full p-2 rounded-lg" placeholder="Ligue 1" required>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Date et Heure</label>
+                            <input type="datetime-local" id="date" class="input-field w-full p-2 rounded-lg" required>
+                        </div>
+                    </div>
+                    <datalist id="liste-competitions"></datalist>
+                    
+                    <!-- Logos (Upload) -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Logo Domicile</label>
+                            <div class="file-input-wrapper">
+                                <div class="file-input-btn">📁 Choisir</div>
+                                <input type="file" id="logoDomicileFile" accept="image/*">
+                            </div>
+                            <input type="hidden" id="logoDomicile" value="">
+                            <img id="previewLogoDom" src="" class="h-10 mt-1 rounded hidden object-contain">
+                            <p id="info-logo-dom" class="text-xs text-green-400 mt-1 hidden">✅ Logo mémorisé</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Logo Extérieur</label>
+                            <div class="file-input-wrapper">
+                                <div class="file-input-btn">📁 Choisir</div>
+                                <input type="file" id="logoExterieurFile" accept="image/*">
+                            </div>
+                            <input type="hidden" id="logoExterieur" value="">
+                            <img id="previewLogoExt" src="" class="h-10 mt-1 rounded hidden object-contain">
+                            <p id="info-logo-ext" class="text-xs text-green-400 mt-1 hidden">✅ Logo mémorisé</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Centrale (Upload) -->
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Image Centrale (Bannière)</label>
+                        <div class="file-input-wrapper">
+                            <div class="file-input-btn">📁 Choisir une image</div>
+                            <input type="file" id="imageFile" accept="image/*">
+                        </div>
+                        <input type="hidden" id="imageCentrale" value="">
+                        <img id="previewImageCentrale" src="" class="h-20 mt-1 rounded hidden object-cover w-full">
+                    </div>
+
+                    <!-- Pronostic -->
+                    <div>
+                        <label class="block text-xs text-gray-300 mb-1">Pronostic</label>
+                        <textarea id="pronostic" rows="2" class="input-field w-full p-2 rounded-lg"></textarea>
+                    </div>
+                    
+                    <!-- Score + Proba -->
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Score Prédit (VIP)</label>
+                            <input type="text" id="scorePredit" class="input-field w-full p-2 rounded-lg" placeholder="2-1">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-300 mb-1">Probabilité (%)</label>
+                            <input type="number" id="probabilite" class="input-field w-full p-2 rounded-lg" min="0" max="100" value="85">
+                        </div>
+                    </div>
+
+                    <div class="bg-red-900/30 border border-red-600 p-2 rounded-lg text-xs text-red-200">
+                        ⚠️ Le score prédit sera <strong>masqué</strong> dans la version gratuite.
+                    </div>
+
+                    <!-- Pubs requises -->
+                    <div id="requiredAds-container">
+                        <label class="block text-xs text-gray-300 mb-1">Pubs requises (Gratuit)</label>
+                        <input type="number" id="requiredAds" class="input-field w-full p-2 rounded-lg" min="1" value="1">
+                    </div>
+
+                    <!-- Checkboxes -->
+                    <div class="flex gap-4 mt-2" id="checkboxes-container">
+                        <label class="flex items-center gap-1 cursor-pointer">
+                            <input type="checkbox" id="publierGratuit" checked class="w-4 h-4 accent-yellow-500">
+                            <span class="text-sm text-white">Gratuit</span>
+                        </label>
+                        <label class="flex items-center gap-1 cursor-pointer">
+                            <input type="checkbox" id="publierPayant" checked class="w-4 h-4 accent-yellow-500">
+                            <span class="text-sm text-white">Payant (VIP)</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" id="submit-btn" class="btn-gold w-full py-3 rounded-xl text-md mt-2">
+                        🚀 Publier
+                    </button>
+                    <button type="button" id="cancel-edit-btn" class="w-full text-center text-gray-400 text-xs mt-1 hover:text-white hidden" onclick="resetForm()">
+                        Annuler la modification
+                    </button>
+                </form>
+            </div>
+
+            <!-- COLONNE DROITE : LISTE DES MATCHS -->
+            <div class="lg:col-span-3 space-y-4">
+                <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
+                    <h3 class="text-md font-bold text-green-400 mb-3">🆓 Matchs Gratuits</h3>
+                    <div id="liste-gratuits" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+                </div>
+
+                <div class="bg-gray-900/50 border border-gray-700 rounded-2xl p-4">
+                    <h3 class="text-md font-bold text-yellow-400 mb-3">👑 Matchs Payants (VIP)</h3>
+                    <div id="liste-payants" class="space-y-2 max-h-[300px] overflow-y-auto pr-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const firebaseConfig = {
+            apiKey: "AIzaSyDjCetYewUA-b_nvUwRLYNn7b-13a03-2Y",
+            authDomain: "paris-mystique.firebaseapp.com",
+            projectId: "paris-mystique",
+            storageBucket: "paris-mystique.firebasestorage.app",
+            messagingSenderId: "307416827612",
+            appId: "1:307416827612:web:6c39760055cd614e631619",
+            measurementId: "G-Y0G8QWB5FJ"
+        };
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy, Timestamp, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+        const provider = new GoogleAuthProvider();
+
+        // Éléments UI
+        const loginScreen = document.getElementById('login-screen');
+        const adminScreen = document.getElementById('admin-screen');
+        const loginBtn = document.getElementById('google-login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const loginError = document.getElementById('login-error');
+        const form = document.getElementById('match-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const formTitle = document.getElementById('form-title');
+        const editIdInput = document.getElementById('edit-id');
+        const editTypeInput = document.getElementById('edit-type');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
+        
+        const checkboxGratuit = document.getElementById('publierGratuit');
+        const checkboxPayant = document.getElementById('publierPayant');
+        const checkboxesContainer = document.getElementById('checkboxes-container');
+        const requiredAdsContainer = document.getElementById('requiredAds-container');
+        
+        const logoDomFile = document.getElementById('logoDomicileFile');
+        const logoExtFile = document.getElementById('logoExterieurFile');
+        const imageFile = document.getElementById('imageFile');
+        
+        const logoDomUrl = document.getElementById('logoDomicile');
+        const logoExtUrl = document.getElementById('logoExterieur');
+        const imageCentraleUrl = document.getElementById('imageCentrale');
+        
+        const previewLogoDom = document.getElementById('previewLogoDom');
+        const previewLogoExt = document.getElementById('previewLogoExt');
+        const previewImageCentrale = document.getElementById('previewImageCentrale');
+        
+        const infoLogoDom = document.getElementById('info-logo-dom');
+        const infoLogoExt = document.getElementById('info-logo-ext');
+
+        const ADMIN_EMAIL = "muslimwalyy@gmail.com"; 
+        let isEditing = false;
+
+        // ⭐ GESTION DE LA MÉMOIRE LOCALE (Équipes et Compétitions)
+        function chargerMemoire() {
+            // Équipes
+            const equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
+            const datalistEquipes = document.getElementById('liste-equipes');
+            datalistEquipes.innerHTML = '';
+            equipes.sort((a,b) => a.nom.localeCompare(b.nom)).forEach(eq => {
+                const option = document.createElement('option');
+                option.value = eq.nom;
+                datalistEquipes.appendChild(option);
+            });
+
+            // Compétitions
+            const competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
+            const datalistComp = document.getElementById('liste-competitions');
+            datalistComp.innerHTML = '';
+            competitions.sort().forEach(c => {
+                const option = document.createElement('option');
+                option.value = c;
+                datalistComp.appendChild(option);
+            });
+        }
+
+        // ⭐ VÉRIFIER SI L'ÉQUIPE EXISTE (Pour afficher son logo automatiquement)
+        window.verifierEquipe = (type) => {
+            const nomInput = type === 'dom' ? document.getElementById('equipeDomicile') : document.getElementById('equipeExterieur');
+            const nom = nomInput.value.trim();
+            const logoImg = type === 'dom' ? previewLogoDom : previewLogoExt;
+            const logoHidden = type === 'dom' ? logoDomUrl : logoExtUrl;
+            const infoText = type === 'dom' ? infoLogoDom : infoLogoExt;
+
+            if (!nom) {
+                logoImg.classList.add('hidden');
+                logoHidden.value = '';
+                infoText.classList.add('hidden');
+                return;
+            }
+
+            const equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
+            const equipe = equipes.find(e => e.nom.toLowerCase() === nom.toLowerCase());
+
+            if (equipe && equipe.logo) {
+                // Équipe trouvée avec logo -> On affiche
+                logoImg.src = equipe.logo;
+                logoImg.classList.remove('hidden');
+                logoHidden.value = equipe.logo;
+                infoText.classList.remove('hidden');
+            } else {
+                // Équipe inconnue ou sans logo -> On laisse vide pour import
+                logoImg.classList.add('hidden');
+                logoHidden.value = '';
+                infoText.classList.add('hidden');
+            }
+        };
+
+        // Aperçu des images
+        logoDomFile.addEventListener('change', (e) => afficherPreview(e, previewLogoDom));
+        logoExtFile.addEventListener('change', (e) => afficherPreview(e, previewLogoExt));
+        imageFile.addEventListener('change', (e) => afficherPreview(e, previewImageCentrale));
+
+        function afficherPreview(event, imgElement) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imgElement.src = e.target.result;
+                    imgElement.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imgElement.classList.add('hidden');
+            }
+        }
+
+        checkboxGratuit.addEventListener('change', (e) => {
+            requiredAdsContainer.style.display = e.target.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('clear-memory-btn').addEventListener('click', () => {
+            if (confirm("Voulez-vous vraiment vider la mémoire des équipes et compétitions ?")) {
+                localStorage.removeItem('equipes_memoire');
+                localStorage.removeItem('competitions_memoire');
+                chargerMemoire();
+                alert("Mémoire vidée.");
+            }
+        });
+
+        // Connexion
+        loginBtn.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                if (result.user.email !== ADMIN_EMAIL) {
+                    await signOut(auth);
+                    throw new Error("Accès refusé.");
+                }
+            } catch (error) {
+                loginError.textContent = error.message;
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        onAuthStateChanged(auth, (user) => {
+            if (user && user.email === ADMIN_EMAIL) {
+                loginScreen.classList.add('hidden');
+                adminScreen.classList.remove('hidden');
+                chargerMemoire();
+                chargerMatchs();
+            } else {
+                loginScreen.classList.remove('hidden');
+                adminScreen.classList.add('hidden');
+            }
+        });
+
+        // Charger les listes
+        function chargerMatchs() {
+            onSnapshot(query(collection(db, "matchs_gratuits"), orderBy("date", "desc")), (snapshot) => {
+                const container = document.getElementById('liste-gratuits');
+                container.innerHTML = '';
+                if (snapshot.empty) container.innerHTML = '<p class="text-gray-500 text-xs">Aucun match.</p>';
+                snapshot.forEach((docSnap) => {
+                    container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'gratuit'));
+                });
+            });
+
+            onSnapshot(query(collection(db, "matchs_payants"), orderBy("date", "desc")), (snapshot) => {
+                const container = document.getElementById('liste-payants');
+                container.innerHTML = '';
+                if (snapshot.empty) container.innerHTML = '<p class="text-gray-500 text-xs">Aucun match.</p>';
+                snapshot.forEach((docSnap) => {
+                    container.appendChild(creerCarteMatch(docSnap.data(), docSnap.id, 'payant'));
+                });
+            });
+        }
+
+        // ⭐ CRÉATION DE LA CARTE AVEC BOUTONS FONCTIONNELS
+        function creerCarteMatch(m, id, type) {
+            const div = document.createElement('div');
+            div.className = "flex items-center justify-between bg-black/40 p-2 rounded-lg border border-gray-700 text-sm mb-2";
+            const dateStr = m.date ? new Date(m.date.seconds * 1000).toLocaleDateString('fr-FR') : 'Date ?';
+            
+            div.innerHTML = `
+                <div class="flex items-center gap-2">
+                    ${m.logoDomicile ? `<img src="${m.logoDomicile}" class="w-6 h-6 object-contain">` : ''}
+                    <div>
+                        <p class="font-bold text-white text-xs">${m.equipeDomicile} vs ${m.equipeExterieur}</p>
+                        <p class="text-[10px] text-gray-400">${m.competition} · ${dateStr}</p>
+                    </div>
+                </div>
+                <div class="flex gap-1">
+                    <button type="button" class="btn-edit text-blue-400 p-1 hover:text-blue-300" data-id="${id}" data-type="${type}">✏️</button>
+                    <button type="button" class="btn-delete text-red-400 p-1 hover:text-red-300" data-id="${id}" data-type="${type}">🗑️</button>
+                </div>
+            `;
+
+            div.querySelector('.btn-edit').addEventListener('click', (e) => {
+                e.preventDefault();
+                editerMatch(id, type);
+            });
+            div.querySelector('.btn-delete').addEventListener('click', (e) => {
+                e.preventDefault();
+                supprimerMatch(id, type);
+            });
+
+            return div;
+        }
+
+        async function supprimerMatch(id, type) {
+            if (!confirm("Voulez-vous vraiment supprimer ce match ?")) return;
+            const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
+            try {
+                await deleteDoc(doc(db, coll, id));
+            } catch (e) {
+                alert("❌ Erreur: " + e.message);
+            }
+        }
+
+        async function editerMatch(id, type) {
+            const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
+            const docSnap = await getDoc(doc(db, coll, id));
+            
+            if (docSnap.exists()) {
+                const m = docSnap.data();
+                isEditing = true;
+                editIdInput.value = id;
+                editTypeInput.value = type;
+                
+                document.getElementById('equipeDomicile').value = m.equipeDomicile || '';
+                document.getElementById('equipeExterieur').value = m.equipeExterieur || '';
+                document.getElementById('competition').value = m.competition || '';
+                
+                if (m.date) {
+                    const d = new Date(m.date.seconds * 1000);
+                    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+                    document.getElementById('date').value = d.toISOString().slice(0,16);
+                }
+                
+                if (m.logoDomicile) { previewLogoDom.src = m.logoDomicile; previewLogoDom.classList.remove('hidden'); logoDomUrl.value = m.logoDomicile; }
+                if (m.logoExterieur) { previewLogoExt.src = m.logoExterieur; previewLogoExt.classList.remove('hidden'); logoExtUrl.value = m.logoExterieur; }
+                if (m.imageCentrale) { previewImageCentrale.src = m.imageCentrale; previewImageCentrale.classList.remove('hidden'); imageCentraleUrl.value = m.imageCentrale; }
+                
+                document.getElementById('pronostic').value = m.pronostic || '';
+                document.getElementById('scorePredit').value = m.scorePredit || '';
+                document.getElementById('probabilite').value = m.probabilite || 85;
+                document.getElementById('requiredAds').value = m.requiredAds || 1;
+                
+                formTitle.textContent = "✏️ Modifier le match";
+                submitBtn.textContent = "💾 Enregistrer";
+                cancelEditBtn.classList.remove('hidden');
+                
+                checkboxesContainer.classList.add('hidden');
+                requiredAdsContainer.style.display = (type === 'gratuit') ? 'block' : 'none';
+            }
+        }
+
+        window.resetForm = () => {
+            form.reset();
+            editIdInput.value = '';
+            editTypeInput.value = '';
+            isEditing = false;
+            formTitle.textContent = "📝 Publier un match";
+            submitBtn.textContent = "🚀 Publier";
+            cancelEditBtn.classList.add('hidden');
+            
+            previewLogoDom.classList.add('hidden');
+            previewLogoExt.classList.add('hidden');
+            previewImageCentrale.classList.add('hidden');
+            infoLogoDom.classList.add('hidden');
+            infoLogoExt.classList.add('hidden');
+            
+            logoDomUrl.value = '';
+            logoExtUrl.value = '';
+            imageCentraleUrl.value = '';
+            
+            checkboxesContainer.classList.remove('hidden');
+            checkboxGratuit.checked = true;
+            checkboxPayant.checked = true;
+            requiredAdsContainer.style.display = 'block';
+        };
+
+        // Soumission du formulaire
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = "⏳ Traitement...";
+
+            try {
+                // Upload générique
+                async function uploadFile(fileInput, currentUrl, folder) {
+                    if (fileInput.files.length > 0) {
+                        const file = fileInput.files[0];
+                        const storageRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
+                        await uploadBytes(storageRef, file);
+                        return await getDownloadURL(storageRef);
+                    }
+                    return currentUrl;
+                }
+
+                const finalLogoDom = await uploadFile(logoDomFile, logoDomUrl.value, 'logos');
+                const finalLogoExt = await uploadFile(logoExtFile, logoExtUrl.value, 'logos');
+                const finalImageCentrale = await uploadFile(imageFile, imageCentraleUrl.value, 'matchs');
+
+                const nomDom = document.getElementById('equipeDomicile').value.trim();
+                const nomExt = document.getElementById('equipeExterieur').value.trim();
+                const nomComp = document.getElementById('competition').value.trim();
+
+                // ⭐ MÉMORISER LES ÉQUIPES ET LEURS LOGOS
+                let equipes = JSON.parse(localStorage.getItem('equipes_memoire') || '[]');
+                
+                // Domicile
+                let idxDom = equipes.findIndex(e => e.nom.toLowerCase() === nomDom.toLowerCase());
+                if (idxDom > -1) {
+                    if (finalLogoDom) equipes[idxDom].logo = finalLogoDom;
+                } else {
+                    equipes.push({ nom: nomDom, logo: finalLogoDom || null });
+                }
+                
+                // Extérieur
+                let idxExt = equipes.findIndex(e => e.nom.toLowerCase() === nomExt.toLowerCase());
+                if (idxExt > -1) {
+                    if (finalLogoExt) equipes[idxExt].logo = finalLogoExt;
+                } else {
+                    equipes.push({ nom: nomExt, logo: finalLogoExt || null });
+                }
+                localStorage.setItem('equipes_memoire', JSON.stringify(equipes));
+
+                // ⭐ MÉMORISER LA COMPÉTITION
+                let competitions = JSON.parse(localStorage.getItem('competitions_memoire') || '[]');
+                if (nomComp && !competitions.includes(nomComp)) {
+                    competitions.push(nomComp);
+                    localStorage.setItem('competitions_memoire', JSON.stringify(competitions));
+                }
+
+                const dateInput = document.getElementById('date').value;
+                const dateObj = new Date(dateInput);
+                const scorePredit = document.getElementById('scorePredit').value.trim();
+
+                const baseData = {
+                    equipeDomicile: nomDom,
+                    equipeExterieur: nomExt,
+                    competition: nomComp,
+                    date: Timestamp.fromDate(dateObj),
+                    imageCentrale: finalImageCentrale || null,
+                    logoDomicile: finalLogoDom || null,
+                    logoExterieur: finalLogoExt || null,
+                    pronostic: document.getElementById('pronostic').value.trim(),
+                    probabilite: parseInt(document.getElementById('probabilite').value) || 0,
+                };
+
+                if (isEditing) {
+                    const id = editIdInput.value;
+                    const type = editTypeInput.value;
+                    const coll = type === 'gratuit' ? "matchs_gratuits" : "matchs_payants";
+                    
+                    const dataToUpdate = { ...baseData };
+                    if (type === 'payant') dataToUpdate.scorePredit = scorePredit;
+                    else dataToUpdate.requiredAds = parseInt(document.getElementById('requiredAds').value) || 1;
+                    
+                    await updateDoc(doc(db, coll, id), dataToUpdate);
+                    alert("✅ Match modifié !");
+                } else {
+                    if (checkboxGratuit.checked) {
+                        await addDoc(collection(db, "matchs_gratuits"), {
+                            ...baseData,
+                            scorePredit: "",
+                            requiredAds: parseInt(document.getElementById('requiredAds').value) || 1
+                        });
+                    }
+                    if (checkboxPayant.checked) {
+                        await addDoc(collection(db, "matchs_payants"), {
+                            ...baseData,
+                            scorePredit: scorePredit
+                        });
+                    }
+                    alert("✅ Match publié !");
+                }
+                
+                chargerMemoire(); // Recharger l'auto-complétion avec les nouvelles équipes
+                resetForm();
+            } catch (error) {
+                console.error(error);
+                alert("❌ Erreur: " + error.message);
+            } finally {
+                submitBtn.disabled = false;
+                if (!isEditing) submitBtn.textContent = "🚀 Publier";
+            }
+        });
+    </script>
+</body>
+</html>
